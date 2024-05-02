@@ -1,5 +1,7 @@
-package domain;
+package entity;
 
+import entity.majorYard_enum.Gender;
+import entity.majorYard_enum.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,9 +19,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // user_no
     private Long dpartment_no;
-    private String gender;
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender; // male or female
     private String user_login_id;
     private String password;
     private String user_phone;
@@ -39,7 +42,9 @@ public class User {
 
 
     @Enumerated(value = EnumType.STRING)
-    private String role; // 유저 or 관리자
+    private Role role; // user or admin
+
+    // test
 
 
 }
