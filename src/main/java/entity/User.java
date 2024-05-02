@@ -44,5 +44,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role; // user or admin
 
+    // test
+
 
 }
