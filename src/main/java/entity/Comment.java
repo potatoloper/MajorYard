@@ -1,4 +1,4 @@
-package entity.majorYard_enum;
+package entity;
 
 
 import jakarta.persistence.*;

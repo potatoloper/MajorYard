@@ -1,8 +1,11 @@
-package domain;
+package entity;
 
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Table(name = "Post")
 @Entity
@@ -14,13 +17,21 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // post_no
 
-    private String user_name;
+    private String post_title;
+    private String post_content;
+    private String post_like;
 
-    private String gender;
+    private String post_scrab;
 
+    @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String post_created_dt;
 
+    @LastModifiedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String post_mdf_dt;
 
 
 }

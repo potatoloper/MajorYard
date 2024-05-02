@@ -1,6 +1,7 @@
-package domain;
+package entity;
 
 
+import entity.majorYard_enum.BoardName;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,9 +14,9 @@ import lombok.*;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // board_no
 
     @Enumerated(value = EnumType.STRING)
-    private String board_name;
+    private BoardName board_name;
 
 }
