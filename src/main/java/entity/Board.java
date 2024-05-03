@@ -5,6 +5,9 @@ import entity.majorYard_enum.BoardName;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "Board")
 @Entity
 @Getter
@@ -14,9 +17,20 @@ import lombok.*;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="board_no")
     private Long id; // board_no
 
     @Enumerated(value = EnumType.STRING)
     private BoardName board_name;
+
+    //  Board:Post = 1:N
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Post> boardPosts = new ArrayList<>();
+
+
+    //  Board:Department = N:1
+    @ManyToOne
+    @JoinColumn(name = "department_no")
+    private Department department;
 
 }
