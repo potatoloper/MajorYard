@@ -13,10 +13,16 @@ import lombok.*;
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="follow_no")
     private Long id; // follow_no
 
     @Enumerated(value = EnumType.STRING)
     private Follw follw;
+
+    // Follow:User = N:1
+    @ManyToOne
+    @JoinColumn(name = "user_no")
+    private User user;
 
 
 }

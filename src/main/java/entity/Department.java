@@ -4,6 +4,9 @@ import entity.majorYard_enum.MajorCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "Department")
 @Entity
 @Getter
@@ -13,6 +16,7 @@ import lombok.*;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="department_no")
     private Long id; // department_no
 
     private String department_name;
@@ -24,5 +28,19 @@ public class Department {
         this.department_name = department_name;
         this.major_category = major_category;
     }
+
+    //    Department:Board = 1:N
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Board> departmentBoards = new ArrayList<>();
+
+
+
+    //    Department:User = 1:1
+    @OneToOne(mappedBy = "department")
+    private User user;
+
+
+
+
 
 }

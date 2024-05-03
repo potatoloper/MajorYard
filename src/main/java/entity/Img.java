@@ -12,7 +12,17 @@ import lombok.*;
 public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="img_no")
     private Long id; // img_no
 
-    private String img_file_name;
+    private String stored_file_name;
+
+    private String original_file_name;
+
+    private long file_size;
+
+    // Img:Post = N:1
+    @ManyToOne
+    @JoinColumn(name = "post_no")
+    private Post post;
 }
