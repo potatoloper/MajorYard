@@ -1,7 +1,9 @@
 package entity;
 
 import entity.majorYard_enum.Gender;
+import entity.majorYard_enum.Grade;
 import entity.majorYard_enum.Role;
+import entity.majorYard_enum.UserAvailable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,7 +29,8 @@ public class User {
     private Long id; // user_no
     @Enumerated(value = EnumType.STRING)
     private Gender gender; // male or female
-    private String user_login_id;
+    private String user_name;
+    private String login_id;
     private String password;
     private String user_phone;
     private String user_email;
@@ -48,6 +51,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role; // user or admin
 
+    @Enumerated(value = EnumType.STRING)
+    private Grade grade; //one two three four
+
+    @Enumerated(value = EnumType.STRING)
+    private UserAvailable userAvailable; // yes, no
 
     // User:Scarb = 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
