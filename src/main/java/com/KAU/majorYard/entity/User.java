@@ -6,9 +6,7 @@ import entity.majorYard_enum.Role;
 import entity.majorYard_enum.UserAvailable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,37 +15,35 @@ import java.util.List;
 
 @Table(name = "User")
 @Entity
+@Builder
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_no")
     private Long id; // user_no
-    @Enumerated(value = EnumType.STRING)
-    private Gender gender; // male or female
+
     private String user_name;
+    private String nick_name;
     private String login_id;
     private String password;
+
     private String user_phone;
-    private String user_email;
+    private String school_email;
     private String user_birth;
 
 
     @Column(columnDefinition = "TEXT")
     private String user_prof_img;
-
-    @CreatedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created_dt;
-    @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modified_dt;
 
-
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender; // male or female
     @Enumerated(value = EnumType.STRING)
     private Role role; // user or admin
 
@@ -56,6 +52,8 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private UserAvailable userAvailable; // yes, no
+
+
 
     // User:Scarb = 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
@@ -84,7 +82,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Post> userPosts = new ArrayList<>();
 
-
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(password);
+    }
+    public void addUserAuthority() {
+        this.role = Role.USER;
+    }
 
 
 }
