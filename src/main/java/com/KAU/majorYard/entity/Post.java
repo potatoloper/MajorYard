@@ -27,8 +27,10 @@ public class Post {
     private String postTitle;
     private String postContent;
     private String postLike;
-
     private String postScrab;
+
+    @Enumerated(value = EnumType.STRING)
+    private String postType;
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
