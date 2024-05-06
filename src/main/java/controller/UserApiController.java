@@ -1,6 +1,7 @@
 package controller;
 
 import entity.User;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/signin")
-    public CreateUserResponse saveUserV1(@RequestBody @Valid/*<- 의존성 주입 필요*/ User user) {
+    public CreateUserResponse saveUserV1(@RequestBody @Valid User user) {
         Long id = userService.join(user);
         return new CreateUserResponse(id);
     }
