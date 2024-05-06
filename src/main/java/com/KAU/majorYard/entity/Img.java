@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,11 +15,11 @@ public class Img {
     @Column(name="img_no")
     private Long id; // img_no
 
-    private String stored_file_name;
+    private String storedFileName;
 
-    private String original_file_name;
+    private String originalFileName;
 
-    private long file_size;
+    private long fileSize;
 
     // Img:Post = N:1
     @ManyToOne

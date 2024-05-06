@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 
 import jakarta.persistence.*;
@@ -24,19 +24,19 @@ public class Post {
     @Column(name="post_no")
     private Long id; // post_no
 
-    private String post_title;
-    private String post_content;
-    private String post_like;
+    private String postTitle;
+    private String postContent;
+    private String postLike;
 
-    private String post_scrab;
+    private String postScrab;
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime post_created_dt;
+    private LocalDateTime postCreatedDt;
 
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime post_modified_dt;
+    private LocalDateTime postModifiedDt;
 
 
     // Post:Img = 1:N

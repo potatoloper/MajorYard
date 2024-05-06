@@ -1,9 +1,9 @@
-package entity;
+package com.KAU.majorYard.entity;
 
-import entity.majorYard_enum.Gender;
-import entity.majorYard_enum.Grade;
-import entity.majorYard_enum.Role;
-import entity.majorYard_enum.UserAvailable;
+import com.KAU.majorYard.entity.majorYard_enum.Gender;
+import com.KAU.majorYard.entity.majorYard_enum.Grade;
+import com.KAU.majorYard.entity.majorYard_enum.Role;
+import com.KAU.majorYard.entity.majorYard_enum.UserAvailable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,20 +27,20 @@ public class User extends BaseEntity {
     @Column(name="user_no")
     private Long id; // user_no
 
-    private String user_name;
-    private String nick_name;
-    private String login_id;
+    private String userName;
+    private String nickName;
+    private String loginId;
     private String password;
 
-    private String user_phone;
-    private String school_email;
-    private String user_birth;
+    private String userPhone;
+    private String schoolEmail;
+    private String userBirth;
 
 
     @Column(columnDefinition = "TEXT")
-    private String user_prof_img;
-    private LocalDateTime created_dt;
-    private LocalDateTime modified_dt;
+    private String userProfImg;
+    private LocalDateTime createdDt;
+    private LocalDateTime modifiedDt;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender; // male or female

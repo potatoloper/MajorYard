@@ -1,7 +1,7 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 
-import entity.majorYard_enum.BoardName;
+import com.KAU.majorYard.entity.majorYard_enum.BoardName;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class Board {
     private Long id; // board_no
 
     @Enumerated(value = EnumType.STRING)
-    private BoardName board_name;
+    private BoardName boardName;
 
     //  Board:Post = 1:N
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL,orphanRemoval = true)

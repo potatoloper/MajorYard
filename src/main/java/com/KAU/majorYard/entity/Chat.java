@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 
 import jakarta.persistence.*;
@@ -18,7 +18,7 @@ public class Chat {
 
     private String partner;
 
-    private String chat_contents;
+    private String chatContents;
 
     // Chat : User = N:1
     @ManyToOne

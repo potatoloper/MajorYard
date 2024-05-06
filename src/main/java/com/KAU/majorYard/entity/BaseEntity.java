@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

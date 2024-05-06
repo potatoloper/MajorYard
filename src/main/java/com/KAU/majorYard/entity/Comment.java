@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 
 import jakarta.persistence.*;
@@ -18,10 +18,10 @@ public class Comment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="comment_no")
     private Long id; // comment_no
-    private String comment_depth;
-    private String comment_content;
-    private LocalDateTime comment_created_dt;
-    private LocalDateTime comment_modified_dt;
+    private String commentDepth;
+    private String commentContent;
+    private LocalDateTime commentCreatedDt;
+    private LocalDateTime commentModifiedDt;
 
 
     // Comment:Alert = 1:N

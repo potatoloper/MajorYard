@@ -2,7 +2,9 @@ package com.KAU.majorYard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing // 회원가입시 유저 생성시간과 수정시간 추가
 @SpringBootApplication
 public class Main {
 
