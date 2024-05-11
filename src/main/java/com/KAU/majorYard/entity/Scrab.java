@@ -20,8 +20,9 @@ public class Scrab {
     @JoinColumn(name = "user_no")
     private User user;
 
-    // Scrab:Post = 1:1
-    @OneToOne(mappedBy = "scrab")
+    // Scrab:Post = N:1
+    @ManyToOne
+    @JoinColumn(name = "post_no")
     private Post post;
 
 
