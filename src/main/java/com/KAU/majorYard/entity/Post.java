@@ -1,6 +1,7 @@
 package com.KAU.majorYard.entity;
 
 
+import com.KAU.majorYard.entity.majorYard_enum.PostType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,9 +16,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,31 +28,28 @@ public class Post {
 
     private String postTitle;
     private String postContent;
-    private String postLike;
-    private String postScrab;
+    private Long postLike;
+    private Long postScrab;
 
     @Enumerated(value = EnumType.STRING)
-    private String postType;
+    private PostType postType;
 
-    @CreatedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime postCreatedDt;
-
-    @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime postModifiedDt;
+//    @CreatedDate
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    private LocalDateTime postCreatedDt;
+//
+//    @LastModifiedDate
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    private LocalDateTime postModifiedDt;
 
 
     // Post:Img = 1:N
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Img> postImgs = new ArrayList<>();
 
-
-    // 주테이블(Post) 외래키 단방향
-    // Post:Scarb =1:1
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "scrab_no")
-    private Scrab scrab;
+    // Post:Scarb =1:N
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Scrab> postscrabs = new ArrayList<>();
 
     // Post:Alert = 1:N
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true)
