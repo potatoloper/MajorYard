@@ -39,8 +39,8 @@ public class User extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String userProfImg;
-    private LocalDateTime createdDt;
-    private LocalDateTime modifiedDt;
+//    private LocalDateTime createdDt;
+//    private LocalDateTime modifiedDt;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender; // male or female
