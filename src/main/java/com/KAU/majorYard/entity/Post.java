@@ -1,6 +1,7 @@
 package com.KAU.majorYard.entity;
 
 
+import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.PostType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,7 +34,8 @@ public class Post extends BaseEntity{
 
     @Enumerated(value = EnumType.STRING)
     private PostType postType;
-
+    @Enumerated(value = EnumType.STRING)
+    private Answered answered;
 //    @CreatedDate
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    private LocalDateTime postCreatedDt;
