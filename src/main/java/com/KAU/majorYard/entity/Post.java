@@ -31,6 +31,7 @@ public class Post extends BaseEntity{
     private String postContent;
     private Long postLike;
     private Long postScrab;
+    private Long postcomment;
 
     @Enumerated(value = EnumType.STRING)
     private PostType postType;
