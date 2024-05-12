@@ -1,5 +1,6 @@
 package com.KAU.majorYard.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.TimeZone;
 public class BaseEntity {
 
     @CreatedDate    // 데이터 생성할 때 시간 자동 생성
+    @Column(updatable = false)  // creadtedDate는 최초 저장 이후 변경되면 안됨.
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
