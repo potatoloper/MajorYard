@@ -20,9 +20,7 @@ public class Comment extends BaseEntity {
     private Long id; // comment_no
     private String commentDepth;
     private String commentContent;
-    private LocalDateTime commentCreatedDt;
-    private LocalDateTime commentModifiedDt;
-
+    private int depth;
 
     // Comment:Alert = 1:N
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,5 +48,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "user_no")
     private User user;
 
+    //baseentity로 대체.
+//    private LocalDateTime commentCreatedDt;
+//    private LocalDateTime commentModifiedDt;
 
 }
