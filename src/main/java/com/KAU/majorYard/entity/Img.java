@@ -1,5 +1,6 @@
 package com.KAU.majorYard.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Img {
@@ -22,7 +24,17 @@ public class Img {
     private long fileSize;
 
     // Img:Post = N:1
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_no")
+    @JsonBackReference
     private Post post;
+
+    public void changePost(Post post){
+        if(this.post!=null){
+            this.post.getPostImgs().remove(this);
+        }
+        this.post = post;
+//        post.getPostImgs().add(this);
+    }
+
 }
