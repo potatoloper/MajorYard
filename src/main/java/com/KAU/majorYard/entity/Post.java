@@ -3,13 +3,13 @@ package com.KAU.majorYard.entity;
 
 import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.PostType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +29,25 @@ public class Post extends BaseEntity{
 
     private String postTitle;
     private String postContent;
-    private Long postLike;
-    private Long postScrab;
-    private Long postcomment;
+    private int postLike;
+    private int postScrab;
+    private int postcomment;
 
+    // 홍보 게시판에서만 사용
     @Enumerated(value = EnumType.STRING)
     private PostType postType;
+
+    // 질문 게시판에서만 사용
     @Enumerated(value = EnumType.STRING)
     private Answered answered;
+
+    // 스터디 게시판에서만 사용
+    private String studyRegion;
+    private int studyPartyOf;
+    private int studyFee;
+    private String studyUntil;
+
+
 //    @CreatedDate
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    private LocalDateTime postCreatedDt;
@@ -48,6 +59,7 @@ public class Post extends BaseEntity{
 
     // Post:Img = 1:N
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
     private List<Img> postImgs = new ArrayList<>();
 
     // Post:Scarb =1:N
@@ -79,8 +91,9 @@ public class Post extends BaseEntity{
     @JoinColumn(name = "board_no")
     private Board board;
 
-
-
-
+    public void update(String postTitle, String postContent) {
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+    }
 
 }
