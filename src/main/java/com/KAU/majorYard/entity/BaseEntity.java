@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -33,10 +34,6 @@ public class BaseEntity {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Locale.setDefault(Locale.KOREA);
         this.createdDate = LocalDateTime.now();
-        this.modifiedDate = LocalDateTime.now();
-    }
-
-    public void updateModifiedDate(){
         this.modifiedDate = LocalDateTime.now();
     }
 }

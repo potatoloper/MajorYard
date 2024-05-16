@@ -43,8 +43,8 @@ public class Post extends BaseEntity{
 
     // 스터디 게시판에서만 사용
     private String studyRegion;
-    private int studyPartyOf;
-    private int studyFee;
+    private Integer studyPartyOf;
+    private Integer studyFee;
     private String studyUntil;
 
 
