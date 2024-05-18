@@ -1,6 +1,6 @@
-package entity;
+package com.KAU.majorYard.entity;
 
-import entity.majorYard_enum.MajorCategory;
+import com.KAU.majorYard.entity.majorYard_enum.MajorCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,14 +19,14 @@ public class Department {
     @Column(name="department_no")
     private Long id; // department_no
 
-    private String department_name;
+    private String departmentName;
 
     @Enumerated(value = EnumType.STRING)
-    private MajorCategory major_category; // 대분류 정보 추가
+    private MajorCategory majorCategory; // 대분류 정보 추가
 
-    public Department(String department_name, MajorCategory major_category) {
-        this.department_name = department_name;
-        this.major_category = major_category;
+    public Department(String departmentName, MajorCategory majorCategory) {
+        this.departmentName = departmentName;
+        this.majorCategory = majorCategory;
     }
 
     //    Department:Board = 1:N

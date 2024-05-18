@@ -1,4 +1,4 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 
 import jakarta.persistence.*;
@@ -18,11 +18,9 @@ public class Comment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="comment_no")
     private Long id; // comment_no
-    private String comment_depth;
-    private String comment_content;
-    private LocalDateTime comment_created_dt;
-    private LocalDateTime comment_modified_dt;
-
+    private String commentDepth;
+    private String commentContent;
+    private int depth;
 
     // Comment:Alert = 1:N
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,5 +48,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "user_no")
     private User user;
 
+    //baseentity로 대체.
+//    private LocalDateTime commentCreatedDt;
+//    private LocalDateTime commentModifiedDt;
 
 }

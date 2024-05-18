@@ -1,6 +1,6 @@
-package entity;
+package com.KAU.majorYard.entity;
 
-import entity.majorYard_enum.Follw;
+import com.KAU.majorYard.entity.majorYard_enum.Follw;
 import jakarta.persistence.*;
 import lombok.*;
 

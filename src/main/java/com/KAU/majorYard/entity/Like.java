@@ -1,9 +1,9 @@
-package entity;
+package com.KAU.majorYard.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "Like")
+@Table(name = "Likes")
 @Entity
 @Getter
 @Setter

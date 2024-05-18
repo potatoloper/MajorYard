@@ -1,14 +1,14 @@
-package controller;
+package com.KAU.majorYard.controller;
 
-import dto.request.UserSignupRequestDto;
+import com.KAU.majorYard.dto.request.UserSignupRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import service.UserService;
+import com.KAU.majorYard.service.UserService;
 
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
     private final UserService userService;

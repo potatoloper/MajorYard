@@ -1,6 +1,6 @@
-package service;
+package com.KAU.majorYard.service;
 
-import dto.request.UserSignupRequestDto;
+import com.KAU.majorYard.dto.request.UserSignupRequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
