@@ -23,10 +23,10 @@ public class PostSaveRequestDto {
     @NotNull
     private String postContent;
     @NotNull
-    private Long user_no;
+    private Long userNo;
     @NotNull
-    private Long board_no;
-    private List<Img> postImgs;
+    private Long boardNo;
+    private List<Img> postImgs; // 파일명만 받아오면 됨
 //    @NotNull
     @Enumerated(value = EnumType.STRING)
     private PostType postType;

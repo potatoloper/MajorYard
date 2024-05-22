@@ -5,24 +5,20 @@ import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
-import com.KAU.majorYard.entity.Post;
-import com.KAU.majorYard.repository.PostRepository;
 import com.KAU.majorYard.service.PostServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/posts")
+//@RequestMapping(path = "/")
 public class PostApiController {
 
     private final PostServiceImpl postService;
-    private final PostRepository postRepository;
 
-    @PostMapping("/save")
+    @PostMapping("/posts/save")
     //@ResponseStatus(HttpStatus.CREATED)
     public CommonResponse savePost(@RequestBody @Valid PostSaveRequestDto request){
 
@@ -44,7 +40,7 @@ public class PostApiController {
     }
 
     // 게시판에서 게시글 목록 조회
-    @GetMapping("/list")
+    @GetMapping("/posts/list")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse getPostByPaging(@RequestBody @Valid PostPagingRequestDto request /*@Login User user*/){
 
@@ -66,7 +62,7 @@ public class PostApiController {
     }
 
     // 게시글 상세페이지 조회
-    @GetMapping("/list/{id}")
+    @GetMapping("/posts/list/{id}")
     public CommonResponse getPostById(@PathVariable Long id){
         String resultMsg;
         String resultCode;
@@ -85,7 +81,7 @@ public class PostApiController {
     }
 
     // 게시글 업데이트
-    @PutMapping("/list/{id}")
+    @PutMapping("/posts/list/{id}")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
         String resultMsg;
@@ -105,7 +101,7 @@ public class PostApiController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/list/{id}")
+    @DeleteMapping("/posts/list/{id}")
     public CommonResponse deletePost(@PathVariable Long id){
         String resultMsg;
         String resultCode;
