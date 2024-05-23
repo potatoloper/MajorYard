@@ -96,4 +96,24 @@ public class Post extends BaseEntity{
         this.postContent = postContent;
     }
 
+    public void increaseLikes() {
+        this.postLike++;
+    }
+
+    public void decreaseLikes() {
+        this.postLike--;
+    }
+
+    public void increaseScrabs() {
+        this.postScrab++;
+    }
+
+    public void decreaseScarbs() {
+        this.postScrab--;
+    }
+
+    public void increaseComments() {this.postcomment++;}
+
+    public void decreaseComments() {this.postcomment--;}
+
 }
