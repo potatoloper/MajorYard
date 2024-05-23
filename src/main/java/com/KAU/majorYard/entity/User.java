@@ -24,13 +24,26 @@ public class User extends BaseEntity {
     @Column(name="user_no")
     private Long id; // user_no
 
+
+    @Column(name="user_name")
     private String userName;
     private String nickName;
+
+    @Column(name="user_login_id")
     private String loginId;
+
+    @Column(name="user_pwd")
     private String password;
 
+
+
+    @Column(name="user_phone")
     private String userPhone;
+
+
     private String schoolEmail;
+
+    @Column(name="user_birth")
     private String userBirth;
 
     @Column(columnDefinition = "TEXT")
@@ -53,19 +66,20 @@ public class User extends BaseEntity {
     private List<Chat> userChats = new ArrayList<>();
 
     // User:Like = 1:N
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Like> userLikes = new ArrayList<>();
 
     // User:Comment = 1:N
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> userComments = new ArrayList<>();
 
     // 주테이블(User) 외래키 단방향
     // User:Department = 1:1
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.ALL, CascadeType.PERSIST}, orphanRemoval = true)
     @JoinColumn(name = "department_no")
     private Department department;
-
 
     // User:Post = 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)

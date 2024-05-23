@@ -1,15 +1,18 @@
 package com.KAU.majorYard.entity;
 
 
+
 import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.PostType;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
