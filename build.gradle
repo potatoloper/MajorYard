@@ -22,31 +22,45 @@ repositories {
 }
 
 dependencies {
+	/*spring*/
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation' //@Valid 의존성
 
-	compileOnly 'org.projectlombok:lombok'
+	/*lombok*/
+	compileOnly 'org.projectlombok:lombok' // lombok
 	annotationProcessor 'org.projectlombok:lombok'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+
+	/*DB*/
+	runtimeOnly 'com.mysql:mysql-connector-j' // mysql
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+	/*security*/
+	implementation 'org.springframework.boot:spring-boot-starter-security' // spring security
+
+	/*JWT */
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+	/*validation*/
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
+
+
+	/* 기타 의존성 */
+	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 	implementation 'org.hibernate:hibernate-core:6.1.2.Final'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-//	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-//	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-//	implementation 'javax.validation:validation-api:2.0.1.Final'
-//	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
-
+	/* cors */
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 }
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }

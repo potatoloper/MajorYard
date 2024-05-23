@@ -4,21 +4,23 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+
+
+
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 public class BaseEntity {
 
     @CreatedDate    // 데이터 생성할 때 시간 자동 생성
@@ -30,10 +32,13 @@ public class BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedDate;
 
-    public BaseEntity(){
+    public BaseEntity() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
         Locale.setDefault(Locale.KOREA);
         this.createdDate = LocalDateTime.now();
         this.modifiedDate = LocalDateTime.now();
     }
+
+
 }
+
