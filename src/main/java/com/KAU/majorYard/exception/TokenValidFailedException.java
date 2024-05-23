@@ -1,4 +1,4 @@
-package com.KAU.majorYard.ouath.exception;
+package com.KAU.majorYard.exception;
 
 public class TokenValidFailedException extends RuntimeException {
 

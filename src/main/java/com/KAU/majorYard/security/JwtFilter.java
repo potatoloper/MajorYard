@@ -1,5 +1,6 @@
-package com.KAU.majorYard.jwt;
+package com.KAU.majorYard.security;
 
+import com.KAU.majorYard.security.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

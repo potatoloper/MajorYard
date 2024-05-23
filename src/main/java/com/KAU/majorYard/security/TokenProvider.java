@@ -1,4 +1,4 @@
-package com.KAU.majorYard.jwt;
+package com.KAU.majorYard.security;
 
 import com.KAU.majorYard.dto.request.TokenRequestDto;
 import io.jsonwebtoken.Claims;
