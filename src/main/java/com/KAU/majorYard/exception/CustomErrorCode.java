@@ -17,8 +17,6 @@ public enum CustomErrorCode {
     DUPLICATE_USER(HttpStatus.CONFLICT, 4001, "이미 등록된 회원입니다.");
 
 
-
-
     private final HttpStatus httpStatus;
     private final int code;
     private final String message;
