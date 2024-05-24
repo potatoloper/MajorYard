@@ -63,7 +63,7 @@ public class User extends BaseEntity {
 
     // User:Chat = 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Chat> userChats = new ArrayList<>();
+    private List<ChatMessage> userChats = new ArrayList<>();
 
     // User:Like = 1:N
 
