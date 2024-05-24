@@ -13,8 +13,8 @@ import lombok.*;
 public class ChatMessage extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="chat_room_no")
-    private Long id; // chat_room_no
+    @Column(name="chat_message_no")
+    private Long id;
 
     private String sender;
 
@@ -30,6 +30,4 @@ public class ChatMessage extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "chat_room_no")
     private ChatRoom chatRoom;
-
-
 }
