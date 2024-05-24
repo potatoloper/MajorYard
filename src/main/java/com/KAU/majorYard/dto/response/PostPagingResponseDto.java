@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Data
@@ -28,7 +29,7 @@ public class PostPagingResponseDto {
 
     private String nickName;
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime modifiedTime;
+    private String modifiedTime;
     private List<Img> imgs;
 
     // 게시판별 게시글 페이징 조회 response
@@ -43,7 +44,7 @@ public class PostPagingResponseDto {
         this.postType = post.getPostType();
         this.answered = post.getAnswered();
         this.nickName = post.getUser().getNickName();
-        this.modifiedTime = post.getModifiedDate();
+        this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.imgs = post.getPostImgs();
     }
 
