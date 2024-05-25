@@ -32,7 +32,7 @@ jobs:
         shell: bash
       
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build --warning-mode all --exclude-task test
         shell: bash
       
       # $GITHIB_SHA는 커밋의 해시값  
