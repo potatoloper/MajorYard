@@ -11,6 +11,10 @@ env:
   S3_BUCKET_NAME: majoryardbucket
   PROJECT_NAME: MajorYard
   
+permissions:
+      id-token: write
+      contents: read
+  
 # workflow는 한개 이상의 job을 가지며, 각 job은 여러 step에 따라 단계를 나눌 수 있음
 jobs:
   build:
@@ -46,7 +50,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-          id-token: write
           
           
       # script files 복사
