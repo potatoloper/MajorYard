@@ -4,21 +4,18 @@ import com.KAU.majorYard.dto.CommonResponse;
 import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.CommentChildReadResponse;
-import com.KAU.majorYard.dto.response.CommentPagingResponseDto;
 import com.KAU.majorYard.dto.response.CommentParentReadResponse;
 import com.KAU.majorYard.dto.response.CommentReadResponseDto;
-import com.KAU.majorYard.entity.Comment;
 import com.KAU.majorYard.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CommentApiController {
+public class CommentController {
 
     private final CommentService commentService;
 
