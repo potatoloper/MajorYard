@@ -81,7 +81,7 @@ public class AuthRequest {
                     .userBirth(this.getUserBirth())
                     .department(department)
                     .schoolEmail(this.getSchoolEmail())
-                    .role(role != null ? role : Role.USER)
+                    .role(role != null ? role : Role.ROLE_USER)
                     .build();
         }
 
