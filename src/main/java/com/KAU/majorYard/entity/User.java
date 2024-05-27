@@ -86,7 +86,7 @@ public class User extends BaseEntity {
     private List<Post> userPosts = new ArrayList<>();
 
     public void addUserAuthority() {
-        this.role = Role.USER;
+        this.role = Role.ROLE_USER;
     }
 
 

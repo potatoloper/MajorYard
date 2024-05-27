@@ -5,6 +5,7 @@ import com.KAU.majorYard.dto.request.TokenRequestDto;
 import com.KAU.majorYard.entity.Department;
 import com.KAU.majorYard.entity.RefreshToken;
 import com.KAU.majorYard.entity.User;
+import com.KAU.majorYard.entity.majorYard_enum.Role;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
 import com.KAU.majorYard.security.TokenProvider;
@@ -31,7 +32,7 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public Long signup(AuthRequest.userSignUp userSignUp, PasswordEncoder passwordEncoder) {
+    public Long signup(AuthRequest.userSignUp userSignUp, PasswordEncoder passwordEncoder ) {
         if (userRepository.findByLoginId(userSignUp.getLoginId()).isPresent()) {
             throw new CustomException(CustomErrorCode.DUPLICATE_USER);
         }
@@ -49,8 +50,9 @@ public class AuthService {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid department ID"));
 
-        // 유저 엔티티를 생성하고, department를 설정
+        // 유저 엔티티를 생성하고, department와 권한을 설정
         User user = userSignUp.toUser(passwordEncoder, department);
+        user.setRole(Role.ROLE_USER);
 
 
         // 유저 엔티티를 저장

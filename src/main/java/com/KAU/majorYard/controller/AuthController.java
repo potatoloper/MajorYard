@@ -2,9 +2,9 @@ package com.KAU.majorYard.controller;
 
 import com.KAU.majorYard.dto.request.AuthRequest;
 import com.KAU.majorYard.dto.request.TokenRequestDto;
+import com.KAU.majorYard.entity.majorYard_enum.Role;
 import com.KAU.majorYard.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-
     private final AuthService authService;
 
     private final PasswordEncoder passwordEncoder;
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<Long> signup(@RequestBody AuthRequest.userSignUp userSignUp) {
