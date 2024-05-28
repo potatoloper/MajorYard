@@ -41,17 +41,19 @@ dependencies {
 
 
 	/*security*/
-	implementation 'org.springframework.boot:spring-boot-starter-security' // spring security
+//	implementation 'org.springframework.boot:spring-boot-starter-security' // spring security
 
 	/*JWT */
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+//	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+//	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+//	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 	/*validation*/
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
 
+	/*AWS*/
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.0.2'
 
 	/* 기타 의존성 */
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
