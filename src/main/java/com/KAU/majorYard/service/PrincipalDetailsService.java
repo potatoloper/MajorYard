@@ -46,7 +46,8 @@ public class PrincipalDetailsService implements UserDetailsService {
 
         // 권한 준비
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userInfo.getRole().name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        authorities.add(new SimpleGrantedAuthority(userInfo.getRole().name()));
 
         // 로그인 시도된 사용자의 정보를 로깅
         logger.info("사용자 이름으로 사용자를 불러왔습니다: {}, 역할: {}", userInfo.getLoginId(), userInfo.getRole().name());

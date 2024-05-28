@@ -28,13 +28,25 @@ jwt:
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret' 이라는 문자열을 base64로 인코딩
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-  token-validity-in-seconds: 86400	# 초 # 토큰 유효 시간 (초 단위)
+  token-validity-in-seconds: 86400	# 초  (토큰 유효 시간)
 
 
 logging:
   level:
     org:
       springframework:
-        web: DEBUG
-      hibernate: DEBUG
+        web: DEBUG  # 웹 요청 처리에 관한 로그
+        data: DEBUG # Spring Data 관련 로그
+        security: DEBUG # Spring Security 관련 로그
+      hibernate:
+        SQL: DEBUG  # 실행되는 SQL 쿼리를 출력
+        type: TRACE # SQL 쿼리의 파라미터 값을 출력
+        event: TRACE # 하이버네이트 이벤트 처리 로그
+      jpa:
+        repository: DEBUG # JPA 리포지토리 호출 정보
 
+  spring:
+    profiles:
+      group:
+        set1: set1
+        set2: set2
