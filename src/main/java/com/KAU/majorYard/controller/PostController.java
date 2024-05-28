@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping(path = "/")
+@RequestMapping(path = "/posts")
 public class PostController {
 
     private final PostServiceImpl postService;
 
-    @PostMapping("/posts/save")
+    @PostMapping("/save")
     //@ResponseStatus(HttpStatus.CREATED)
     public CommonResponse savePost(@RequestBody @Valid PostSaveRequestDto request){
 
@@ -40,7 +40,7 @@ public class PostController {
     }
 
     // 게시판에서 게시글 목록 조회
-    @GetMapping("/posts/list")
+    @GetMapping("/list")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse getPostByPaging(@RequestBody @Valid PostPagingRequestDto request /*@Login User user*/){
 
@@ -62,7 +62,7 @@ public class PostController {
     }
 
     // 게시글 상세페이지 조회
-    @GetMapping("/posts/list/{id}")
+    @GetMapping("/list/{id}")
     public CommonResponse getPostById(@PathVariable Long id){
         String resultMsg;
         String resultCode;
@@ -81,7 +81,7 @@ public class PostController {
     }
 
     // 게시글 업데이트
-    @PutMapping("/posts/list/{id}")
+    @PutMapping("/list/{id}")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
         String resultMsg;
@@ -101,7 +101,7 @@ public class PostController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/posts/list/{id}")
+    @DeleteMapping("/list/{id}")
     public CommonResponse deletePost(@PathVariable Long id){
         String resultMsg;
         String resultCode;

@@ -7,6 +7,7 @@ import com.KAU.majorYard.entity.Post;
 import com.KAU.majorYard.entity.User;
 import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.PostType;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class PostSaveRequestDto {
     @NotNull
     private String postContent;
     @NotNull
+    @Column(name="user_no")
     private Long userNo;
     @NotNull
     private Long boardNo;

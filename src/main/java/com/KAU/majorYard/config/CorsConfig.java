@@ -18,11 +18,11 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedOrigin("*"); // TODO: 실제 도메인으로 변경해야 함.
+        config.addAllowedHeader("*"); //TODO: 실제 사용하는 헤더만 추가
+        config.addAllowedMethod("*"); // TODO: 필요한 메서드만 추가
 
-        source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }

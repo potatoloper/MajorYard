@@ -47,6 +47,7 @@ public class TokenProvider {
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
+                .distinct()  // 중복 제거를 위해 distinct() 추가
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
