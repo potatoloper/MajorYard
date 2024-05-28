@@ -88,6 +88,13 @@ public class PostServiceImpl implements PostService{
         }
     }
 
+    // 홍보게시글 답변여부 YES로 업데이트
+    @Transactional
+    public void pmtUpdateAnsweredPost(Long id){
+        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+        post.updateAnswered();
+    }
+
     // 게시글 삭제
     @Transactional
     public void deletePosts(Long id){
