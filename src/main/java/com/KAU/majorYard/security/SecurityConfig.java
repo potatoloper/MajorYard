@@ -27,7 +27,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.io.PrintWriter;
 
-@EnableWebSecurity
+@EnableWebSecurity(debug = true) //TODO: 테스트용 디버깅 모드이므로 나중에 꼭 지워야 함
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -59,52 +59,47 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic(httpBasic -> httpBasic.disable()) // 기본 HTTP 인증 비활성화
                 .csrf(csrf -> csrf.disable()) /* 1번 */ // CSRF 보호 기능 비활성화
-                .headers((headerConfig) ->
-                        headerConfig.frameOptions(frameOptionsConfig ->
-                                frameOptionsConfig.disable()
-                        )
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리를 무상태로 설정
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class) // CORS 필터 추가
+                .headers((headerConfig) -> headerConfig.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable())).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리를 무상태로 설정
+//                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class) // CORS 필터 추가
 
 
-                /* 2번 */
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll() // 회원가입에 대해 모든 사용자에게 접근 허용
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/**").hasRole("ADMIN") // /auth/**에 대한 POST는 ADMIN만 가능
-                        .requestMatchers(HttpMethod.POST, "/posts/**").hasRole("USER")// 로그인 인증을 하여 USER 권한을 획득한 사용자만 접근
+
+                /* 2번 */.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll() // 회원가입은 인증 없이 접근 허용
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // 로그인은 인증 없이 접근 허용
+                        .requestMatchers(HttpMethod.POST, "/auth/**").hasAnyRole("ADMIN") // /auth/** 경로는 ADMIN 권한을 가진 사용자만 접근 가능
+                        .requestMatchers(HttpMethod.POST, "/posts/**").hasAnyAuthority("USER") // /posts/** 경로는 USER 권한을 가진 사용자만 접근 가능
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
                 )
 
                 /* 3번 */
                 // 인증 실패 시 처리 ( 401 403 관련 예외처리)
-                .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler));
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 인증 실패 시 처리
+                        .accessDeniedHandler(jwtAccessDeniedHandler)); // 권한 부족 시 처리
 
 
         return http.build();
     }
-    private final AuthenticationEntryPoint unauthorizedEntryPoint =
-            (request, response, authException) -> {
-                ErrorResponse fail = new ErrorResponse(HttpStatus.UNAUTHORIZED, "Spring security unauthorized...");
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                String json = new ObjectMapper().writeValueAsString(fail);
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                PrintWriter writer = response.getWriter();
-                writer.write(json);
-                writer.flush();
-            };
 
-    private final AccessDeniedHandler accessDeniedHandler =
-            (request, response, accessDeniedException) -> {
-                ErrorResponse fail = new ErrorResponse(HttpStatus.FORBIDDEN, "Spring security forbidden...");
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                String json = new ObjectMapper().writeValueAsString(fail);
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                PrintWriter writer = response.getWriter();
-                writer.write(json);
-                writer.flush();
-            };
+    private final AuthenticationEntryPoint unauthorizedEntryPoint = (request, response, authException) -> {
+        ErrorResponse fail = new ErrorResponse(HttpStatus.UNAUTHORIZED, "Spring security unauthorized...");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        String json = new ObjectMapper().writeValueAsString(fail);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        PrintWriter writer = response.getWriter();
+        writer.write(json);
+        writer.flush();
+    };
+
+    private final AccessDeniedHandler accessDeniedHandler = (request, response, accessDeniedException) -> {
+        ErrorResponse fail = new ErrorResponse(HttpStatus.FORBIDDEN, "Spring security forbidden...");
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        String json = new ObjectMapper().writeValueAsString(fail);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        PrintWriter writer = response.getWriter();
+        writer.write(json);
+        writer.flush();
+    };
 
     @Getter
     @RequiredArgsConstructor

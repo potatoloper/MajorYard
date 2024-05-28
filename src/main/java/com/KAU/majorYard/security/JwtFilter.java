@@ -1,6 +1,6 @@
 package com.KAU.majorYard.security;
 
-import com.KAU.majorYard.security.TokenProvider;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// 토큰을 해석하고, 유효성을 검증한 후, SecurityContext에 인증 정보를 설정하는 역할을 수행
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -22,7 +23,6 @@ public class JwtFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     // 실제 필터링 로직은 doFilterInternal 에 들어감
-    // JWT 토큰의 인증 정보를 현재 쓰레드의 SecurityContext 에 저장하는 역할 수행
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 

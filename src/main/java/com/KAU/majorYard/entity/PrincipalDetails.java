@@ -15,7 +15,7 @@ public class PrincipalDetails implements UserDetails {
     public PrincipalDetails(User user, Collection<GrantedAuthority> authorities) {
         this.user = user;
         this.authorities = new ArrayList<>(authorities);  // 기존 권한을 리스트에 추가
-        this.authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));  // 새 권한 추가
+        this.authorities.add(new SimpleGrantedAuthority( user.getRole().name()));  // 새 권한 추가
     }
 
     @Override
