@@ -5,12 +5,12 @@ ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh # 해당 코드로 profile.sh 내의 함수 사용
 
-REPOSITORY=/home/ec2-user/app/step3
+REPOSITORY=/home/ec2-user/MajorYard
 
 echo ">>> Build 파일 복사"
 echo ">>> cp $REPOSITORY/zip/build/libs/*.jar $REPOSITORY/"
 
-cp $REPOSITORY/zip/build/libs/*.jar $REPOSITORY/
+cp $REPOSITORY/build/libs/*.jar $REPOSITORY/
 
 echo ">>> 새 어플리케이션 배포"
 JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)    # jar 이름 꺼내오기
