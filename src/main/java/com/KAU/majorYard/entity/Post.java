@@ -119,4 +119,8 @@ public class Post extends BaseEntity{
 
     public void decreaseComments() {this.postcomment--;}
 
+    public void updateAnswered(){
+        this.answered = Answered.Y;
+    }
+
 }

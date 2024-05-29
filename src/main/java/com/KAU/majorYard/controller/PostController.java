@@ -100,6 +100,25 @@ public class PostController {
         }
     }
 
+    // 질문게시판 답변상태 Y로 업데이트. 게시판들이 나눠지고 추가되어야 하는 사항이기에, url은 임시로 둠
+    @PutMapping("/list/{id}/proboard")
+    public CommonResponse updateAnsweredPost(@PathVariable Long id){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            postService.pmtUpdateAnsweredPost(id);
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
     // 게시글 삭제
     @DeleteMapping("/list/{id}")
     public CommonResponse deletePost(@PathVariable Long id){

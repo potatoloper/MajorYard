@@ -38,7 +38,7 @@ public class PostReadResponseDto {
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "Asia/Seoul")
     private String modifiedTime;
     private List<Img> imgs;
-    private List<Comment> postComments = new ArrayList<>();
+    //private List<Comment> postComments = new ArrayList<>();
 
     @Builder
     public PostReadResponseDto(Post post){
@@ -53,7 +53,7 @@ public class PostReadResponseDto {
         this.nickName = post.getUser().getNickName();
         this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.imgs = post.getPostImgs();
-        this.postComments = post.getPostComments();
+        //this.postComments = post.getPostComments();
     }
 
 }
