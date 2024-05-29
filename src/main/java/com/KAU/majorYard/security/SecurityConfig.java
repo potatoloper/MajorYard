@@ -58,13 +58,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic(httpBasic -> httpBasic.disable()) // 기본 HTTP 인증 비활성화
-                .csrf(csrf -> csrf.disable()) /* 1번 */ // CSRF 보호 기능 비활성화
-                .headers((headerConfig) -> headerConfig.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable())).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리를 무상태로 설정
-//                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class) // CORS 필터 추가
+                /* 1번 */ // CSRF 보호 기능 비활성화
+                .csrf(csrf -> csrf.disable())
+                .headers((headerConfig) -> headerConfig.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()))  // X-Frame-Options 비활성화
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리를 무상태로 설정
 
-
-
-                /* 2번 */.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll() // 회원가입은 인증 없이 접근 허용
+                /* 2번 */
+                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll() // 회원가입은 인증 없이 접근 허용
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // 로그인은 인증 없이 접근 허용
                         .requestMatchers(HttpMethod.POST, "/auth/**").hasAnyRole("ADMIN") // /auth/** 경로는 ADMIN 권한을 가진 사용자만 접근 가능
                         .requestMatchers(HttpMethod.POST, "/posts/**").hasAnyAuthority("USER") // /posts/** 경로는 USER 권한을 가진 사용자만 접근 가능
@@ -75,8 +75,12 @@ public class SecurityConfig {
                 // 인증 실패 시 처리 ( 401 403 관련 예외처리)
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 인증 실패 시 처리
-                        .accessDeniedHandler(jwtAccessDeniedHandler)); // 권한 부족 시 처리
+                        .accessDeniedHandler(jwtAccessDeniedHandler)) // 권한 부족 시 처리
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class); // CORS 필터 추가
 
+
+        // TODO: formlogin.disable => springsecurity jwt , restapi
 
         return http.build();
     }
