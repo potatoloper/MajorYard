@@ -41,12 +41,12 @@ dependencies {
 
 
 	/*security*/
-	implementation 'org.springframework.boot:spring-boot-starter-security' // spring security
+//	implementation 'org.springframework.boot:spring-boot-starter-security' // spring security
 
 	/*JWT */
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+//	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+//	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+//	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 	/*validation*/
 	implementation 'javax.validation:validation-api:2.0.1.Final'

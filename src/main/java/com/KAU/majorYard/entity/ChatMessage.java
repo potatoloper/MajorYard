@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "ChatMessage")
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatMessage extends BaseEntity{
@@ -18,7 +17,7 @@ public class ChatMessage extends BaseEntity{
 
     private String sender;
 
-    private String chatContents;
+    private String chatMessage;
 
     // ChatMessage : User = N:1
     @ManyToOne
@@ -30,4 +29,12 @@ public class ChatMessage extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "chat_room_no")
     private ChatRoom chatRoom;
+
+
+    @Builder
+    public ChatMessage(String sender, String message, ChatRoom chatRoom) {
+        this.sender = sender;
+        this.chatMessage = message;
+        this.chatRoom = chatRoom;
+    }
 }
