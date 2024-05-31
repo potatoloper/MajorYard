@@ -4,6 +4,8 @@ package com.KAU.majorYard.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Table(name = "ChatMessage")
 @Entity
 @Getter
@@ -18,13 +20,15 @@ public class ChatMessage extends BaseEntity{
     @Column(name = "sender")
     private String senderName;
 
-//    @Column(name = "chatMessage")
-    private String chatMessage;
+    @Column(name = "chatMessage")
+    private String text;
 
     // ChatMessage : User = N:1
     @ManyToOne
     @JoinColumn(name = "user_no")
     private User user;
+
+    private Timestamp createdTime;
 
 
     // ChatMessage : ChatRoom = N:1
