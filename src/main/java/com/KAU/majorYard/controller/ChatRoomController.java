@@ -3,6 +3,7 @@ package com.KAU.majorYard.controller;
 
 import com.KAU.majorYard.entity.ChatMessage;
 import com.KAU.majorYard.entity.ChatRoom;
+import com.KAU.majorYard.service.ChatMessageService;
 import com.KAU.majorYard.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
+    private final ChatMessageService chatMessageService;
 
     @GetMapping("")
     public String mainPage(Model model) {
@@ -45,6 +47,8 @@ public class ChatRoomController {
     @MessageMapping("/chat/{roomId}")//client to server
     @SendTo("/sub/chat/{roomId}")//server to client
     public ChatMessage processChat(@RequestBody ChatMessage chat) {
+        chatMessageService.save(chat);
         return chat;
     }
+
 }
