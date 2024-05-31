@@ -37,6 +37,8 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect # 사용할 SQL Dialect
         format_sql: true # SQL 포맷팅 여부
 
+  thymeleaf:
+    prefix: classpath:/templates/
 
 #jwt:
 #  header: Authorization  # JWT 토큰을 저장할 헤더 이름
