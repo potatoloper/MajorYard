@@ -1,0 +1,199 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply a nice background color and font to the whole page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Style the chat container */
+.chat-container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden; /* Hide overflowing content */
+}
+
+/* Style the chat header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.chat-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Style the exit room button */
+#exitRoom {
+    text-decoration: none;
+    color: #fff;
+    background-color: #dc3545;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#exitRoom:hover {
+    background-color: #c82333;
+}
+
+/* Style the chat input form */
+.chat-input form {
+    display: flex;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 80%;
+}
+
+/* Style the chat log */
+.chat-log {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.table th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    font-weight: normal;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Style chat messages as speech bubbles */
+.chat-message {
+    position: relative;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background-color: #f9f9f9; /* Light gray background */
+    animation: fadeIn 0.5s ease; /* Fade-in animation */
+}
+
+/* Triangle for the speech bubble tail */
+.chat-message::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    border: 7px solid transparent;
+    border-right-color: #f9f9f9;
+    transform: translateY(-50%);
+}
+
+/* Style the send button with gradient background and hover effect */
+#publish {
+    background: linear-gradient(to bottom, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+#publish:hover {
+    background: linear-gradient(to bottom, #0056b3, #003b80);
+    transform: scale(1.05);
+}
+
+/* Style the chat log rows */
+#chatLog tr {
+    animation: expandRow 0.5s ease; /* Expand row animation */
+}
+
+@keyframes expandRow {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 50px;
+        opacity: 1;
+    }
+}
+
+/* Style individual chat cells */
+#chatLog td {
+    position: relative;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    color: #333;
+    background-color: transparent; /* Transparent background */
+}
+
+/* Triangle for the speech bubble tail in chat log */
+#chatLog td::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    border: 7px solid transparent;
+    border-right-color: #fff;
+    transform: translateY(-50%);
+}
+
+/* Add a small gap between speech bubbles in the chat log */
+#chatLog td + td {
+    margin-top: 10px;
+}
+
+
+/* 말풍선 스타일링 */
+.message-container {
+    background-color: #f1f1f1;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+
+.sent-by-me {
+    background-color: #e1f5fe;
+    text-align: right;
+}
+
+.sender-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.message-text {
+    margin-bottom: 4px;
+}
+
+.created-time {
+    font-size: 0.8em;
+    color: gray;
+}
+

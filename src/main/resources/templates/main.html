@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Service</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div>
+  <a href="/chat/create">채팅방 만들기</a>
+
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>방 번호</th>
+        <th>방 제목</th>
+        <th>입장하기</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="chatRoom : ${chatRooms}">
+        <td th:text="${chatRoom.id}"></td>
+        <td th:text="${chatRoom.roomName}"></td>
+        <td><a th:href="@{/chat/{id}(id=${chatRoom.id})}">입장하기</a></td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
