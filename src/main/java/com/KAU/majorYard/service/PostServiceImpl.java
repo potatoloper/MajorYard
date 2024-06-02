@@ -22,7 +22,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,25 +32,40 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl{
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
+    private final S3Service s3Service;
 
-    // 게시글 저장
+//    // 게시글 저장
+//    @Transactional
+//    @Override
+//    public void savePost(PostSaveRequestDto postDto) {
+//        User user = userRepository.findById(postDto.getUserNo()).orElseThrow( () -> new RuntimeException("유저 PK가 확인되지 않습니다.") );
+//        Board board = boardRepository.findById(postDto.getBoardNo()).orElseThrow( () -> new RuntimeException("게시판이 확인되지 않습니다.") );
+//        List<Img> imgs = postDto.getPostImgs();
+//        Post post = postRepository.save(postDto.toEntity(user, board, imgs));
+//
+//        if(imgs != null){
+//            for (Img img : imgs){
+//                img.changePost(post);
+//            }
+//        }
+//    }
+
     @Transactional
-    @Override
-    public void savePost(PostSaveRequestDto postDto) {
+    public void savePost(PostSaveRequestDto postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo()).orElseThrow( () -> new RuntimeException("유저 PK가 확인되지 않습니다.") );
         Board board = boardRepository.findById(postDto.getBoardNo()).orElseThrow( () -> new RuntimeException("게시판이 확인되지 않습니다.") );
-        List<Img> imgs = postDto.getPostImgs();
-        Post post = postRepository.save(postDto.toEntity(user, board, imgs));
 
-        if(imgs != null){
-            for (Img img : imgs){
-                img.changePost(post);
+        Post post = postRepository.save(postDto.toEntity(user, board));
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
             }
         }
     }
@@ -98,7 +115,15 @@ public class PostServiceImpl implements PostService{
     // 게시글 삭제
     @Transactional
     public void deletePosts(Long id){
-        postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+
+        List<Img> imgs = post.getPostImgs();
+        for (Img img : imgs){
+            if (post.getPostImgs() != null) {
+                s3Service.deleteImage(img.getId());
+            }
+        }
+
         postRepository.deleteById(id);
     }
 }
