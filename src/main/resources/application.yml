@@ -27,7 +27,7 @@ spring:
 ## RDS의 mysql
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://majorYarddb.cf2w2gewqf4l.ap-northeast-2.rds.amazonaws.com:3306?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+#    url: jdbc:mysql://majorYardDB.cf2w2gewqf4l.ap-northeast-2.rds.amazonaws.com:3306/AWSmajorYardDB?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
 #    username: admin
 #    password: tksgkrghkdlxld
 
