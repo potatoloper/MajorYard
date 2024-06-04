@@ -101,6 +101,15 @@ public class S3Service {
         return amazonS3.getUrl(bucket, filename).toString();
     }
 
+    // 해당 파일명들에 해당하는 이미지의 S3 URL 주소 반환
+    public List<String> getFullPath(List<Img> imgs) {
+        List<String> filenames = new ArrayList<>();
+        for (Img img : imgs){
+            filenames.add(amazonS3.getUrl(bucket, img.getStoredFileName()).toString());
+        }
+        return filenames;
+    }
+
     @Transactional
     public void deleteImage(Long imgId)  {
         Img img = imgRepository.findById(imgId).orElseThrow(() -> new RuntimeException("이미지를 찾을 수 없습니다"));

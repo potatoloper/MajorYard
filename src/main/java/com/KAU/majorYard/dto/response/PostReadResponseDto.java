@@ -1,21 +1,15 @@
 package com.KAU.majorYard.dto.response;
 
-import com.KAU.majorYard.entity.Comment;
-import com.KAU.majorYard.entity.Img;
 import com.KAU.majorYard.entity.Post;
 import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.PostType;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -35,13 +29,12 @@ public class PostReadResponseDto {
     private Answered answered;
 
     private String nickName;
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "Asia/Seoul")
     private String modifiedTime;
-    private List<Img> imgs;
-    //private List<Comment> postComments = new ArrayList<>();
+    private List<String> imgUrls;
+    private String contentUrl;
 
     @Builder
-    public PostReadResponseDto(Post post){
+    public PostReadResponseDto(Post post, List<String> imgUrls){
         this.id = post.getId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
@@ -52,8 +45,8 @@ public class PostReadResponseDto {
         this.answered = post.getAnswered();
         this.nickName = post.getUser().getNickName();
         this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.imgs = post.getPostImgs();
-        //this.postComments = post.getPostComments();
+        this.imgUrls = imgUrls;
+        this.contentUrl = post.getUrl();
     }
 
 }

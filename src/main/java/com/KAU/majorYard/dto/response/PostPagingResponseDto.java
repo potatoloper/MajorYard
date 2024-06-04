@@ -30,11 +30,12 @@ public class PostPagingResponseDto {
     private String nickName;
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "Asia/Seoul")
     private String modifiedTime;
-    private List<Img> imgs;
+    private List<String> imgUrls;
+    private String contentUrl;
 
     // 게시판별 게시글 페이징 조회 response
     @Builder
-    public PostPagingResponseDto(Post post){
+    public PostPagingResponseDto(Post post, List<String> imgUrls){
         this.id = post.getId();
         this.postTitle = post.getPostTitle();
         this.postContent = post.getPostContent();
@@ -45,30 +46,8 @@ public class PostPagingResponseDto {
         this.answered = post.getAnswered();
         this.nickName = post.getUser().getNickName();
         this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.imgs = post.getPostImgs();
+        this.imgUrls = imgUrls;
+        this.contentUrl = post.getUrl();
     }
-
-//    @Builder
-//    public PostResponseDto(Long id, String postTitle, String postContent, Long postLike, Long postScrab, PostType postType, Answered answered, User user, Board board){
-//        this.id = id;
-//        this.postTitle = postTitle;
-//        this.postContent = postContent;
-//        this.postLike = postLike;
-//        this.postScrab = postScrab;
-//        this.postType = postType;
-//        this.answered = answered;
-//        this.user = user;
-//        this.board = board;
-//    }
-
-//    public Post toEntity(){
-//        return Post.builder()
-//                .postTitle(this.postTitle)
-//                .postContent(this.postContent)
-//                .postType(this.postType)
-//                .user(this.user)
-//                .board(this.board)
-//                .build();
-//    }
 
 }

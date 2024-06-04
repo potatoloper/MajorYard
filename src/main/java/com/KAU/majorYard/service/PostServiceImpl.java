@@ -40,21 +40,6 @@ public class PostServiceImpl{
     private final ImgRepository imgRepository;
     private final S3Service s3Service;
 
-//    // 게시글 저장
-//    @Transactional
-//    @Override
-//    public void savePost(PostSaveRequestDto postDto) {
-//        User user = userRepository.findById(postDto.getUserNo()).orElseThrow( () -> new RuntimeException("유저 PK가 확인되지 않습니다.") );
-//        Board board = boardRepository.findById(postDto.getBoardNo()).orElseThrow( () -> new RuntimeException("게시판이 확인되지 않습니다.") );
-//        List<Img> imgs = postDto.getPostImgs();
-//        Post post = postRepository.save(postDto.toEntity(user, board, imgs));
-//
-//        if(imgs != null){
-//            for (Img img : imgs){
-//                img.changePost(post);
-//            }
-//        }
-//    }
 
     @Transactional
     public void savePost(PostSaveRequestDto postDto, List<MultipartFile> multipartFiles) throws IOException {
@@ -79,7 +64,7 @@ public class PostServiceImpl{
 
         Page<Post> postPages = postRepository.findAll(pageable);
 
-        Page<PostPagingResponseDto> postDTOPages = postPages.map(postPage -> new PostPagingResponseDto(postPage));
+        Page<PostPagingResponseDto> postDTOPages = postPages.map(postPage -> new PostPagingResponseDto(postPage,s3Service.getFullPath(postPage.getPostImgs())));
         return postDTOPages;
 
     }
@@ -88,22 +73,47 @@ public class PostServiceImpl{
     @Transactional(readOnly = true)
     public PostReadResponseDto findPostById(Long id){
         Post post = postRepository.findById(id).orElseThrow( () -> new RuntimeException("게시글이 확인되지 않습니다.") );
-        return new PostReadResponseDto(post);
+        List<Img> imgs = post.getPostImgs();
+        List<String> imgUrls = new ArrayList<>();
+        if (imgs != null){
+            for (Img img : imgs){
+                imgUrls.add(s3Service.getFullPath(img.getStoredFileName()));
+            }
+        }
+        return new PostReadResponseDto(post, imgUrls);
     }
 
-    // 게시글 업데이트
+    // 게시글 업데이트 (제목, 내용만)
     @Transactional
     public void updatePosts(Long id, PostUpdateRequestDto postDto){
         Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
-        List<Img> imgs = postDto.getPostImgs();
         post.update(postDto.getPostTitle(), postDto.getPostContent());
-        if(imgs != null){
-            imgRepository.saveAll(imgs);
-            for (Img img : imgs){
-                img.changePost(post);
-            }
-        }
     }
+
+
+    // 게시글 업데이트 TODO : 이전 이미지가 이미지 테이블에서 삭제되지 않는 에러 고치기
+//    @Transactional
+//    public void updatePosts(Long id, PostUpdateRequestDto postDto, List<MultipartFile> multipartFiles) throws IOException {
+//        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+//        List<Img> imgs = post.getPostImgs();
+//        System.out.println("imgs:  "+imgs);
+//
+//        if(multipartFiles != null){
+//            if(imgs != null) {
+//                for (Img img : imgs) {
+//                    s3Service.deleteImage(img.getId());
+//                }
+//                post.setPostImagesNull();
+//            }
+//            for (MultipartFile multipartFile : multipartFiles){
+//                s3Service.saveImage(multipartFile, post);
+//            }
+//        }
+//
+//        post.update(postDto.getPostTitle(), postDto.getPostContent());
+//    }
+
+
 
     // 홍보게시글 답변여부 YES로 업데이트
     @Transactional
