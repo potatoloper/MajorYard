@@ -17,12 +17,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/sub");
         //발행 : client to server
         registry.setApplicationDestinationPrefixes("/pub");
+
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //web socket server 경로 지정
-        registry.addEndpoint("/endpoint");
+        registry.addEndpoint("/endpoint").setAllowedOrigins("http://54.180.150.195:8080");
     }
 
 }
