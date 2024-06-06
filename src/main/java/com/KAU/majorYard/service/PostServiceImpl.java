@@ -86,12 +86,13 @@ public class PostServiceImpl{
         return postBuilder.build();
     }
 
+
     //Sort 이용한 페이징 전략
     @Transactional(readOnly = true)
-    public Page<PostPagingResponseDto> findAllPosts(PostPagingRequestDto postPagingRequestDto) {
+    public Page<PostPagingResponseDto> findAllPosts(int page, int size, String sortStr) {
 
-        Sort sort = Sort.by(Sort.Direction.fromString(postPagingRequestDto.getSort()), "id");
-        Pageable pageable = PageRequest.of(postPagingRequestDto.getPage()-1, postPagingRequestDto.getSize(), sort);
+        Sort sort = Sort.by(Sort.Direction.fromString(sortStr), "id");
+        Pageable pageable = PageRequest.of(page-1, size, sort);
 
         Page<Post> postPages = postRepository.findAll(pageable);
 
