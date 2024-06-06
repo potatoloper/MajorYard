@@ -53,13 +53,13 @@ public class PostController {
     // 게시판에서 게시글 목록 조회
     @GetMapping("/list")
     //@ResponseStatus(HttpStatus.OK)
-    public CommonResponse getPostByPaging(@RequestBody @Valid PostPagingRequestDto request /*@Login User user*/){
+    public CommonResponse getPostByPaging(@RequestParam(value = "page") int pageNum, @RequestParam int size, @RequestParam String sort){
 
         String resultMsg;
         String resultCode;
 
         try {
-            Page<PostPagingResponseDto> page = postService.findAllPosts(request);
+            Page<PostPagingResponseDto> page = postService.findAllPosts(pageNum, size, sort);
             resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
@@ -91,7 +91,7 @@ public class PostController {
         }
     }
 
-    // 게시글 업데이트
+    // 게시글 업데이트 (제목, 내용만)
     @PutMapping("/list/{id}")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
@@ -110,6 +110,28 @@ public class PostController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+    // 게시글 업데이트
+//    @PutMapping("/list/{id}")
+//    //@ResponseStatus(HttpStatus.OK)
+//    public CommonResponse updatePost(@PathVariable Long id,
+//                                     @RequestPart(value="posting") @Valid PostUpdateRequestDto request,
+//                                     @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
+//        String resultMsg;
+//        String resultCode;
+//
+//        try {
+//            postService.updatePosts(id, request);
+//            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+//            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+//            return new CommonResponse(resultCode, resultMsg);
+//
+//        }catch (Exception e){
+//            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
+//            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
+//            return new CommonResponse(resultCode, resultMsg);
+//        }
+//    }
 
     // 질문게시판 답변상태 Y로 업데이트. 게시판들이 나눠지고 추가되어야 하는 사항이기에, url은 임시로 둠
     @PutMapping("/list/{id}/proboard")
