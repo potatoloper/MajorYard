@@ -14,5 +14,5 @@ public class PostUpdateRequestDto {
     private String postTitle;
     @NotNull
     private String postContent;
-    private List<Img> postImgs;
+    //private List<Img> postImgs;
 }

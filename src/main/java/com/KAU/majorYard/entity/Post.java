@@ -34,6 +34,7 @@ public class Post extends BaseEntity{
     private String postContent;
     private int postLike;
     private int postScrab;
+    @Column(columnDefinition = "varchar(4000)")
     private int postcomment;
 
     // 홍보 게시판에서만 사용
@@ -49,6 +50,10 @@ public class Post extends BaseEntity{
     private Integer studyPartyOf;
     private Integer studyFee;
     private String studyUntil;
+
+    // 시사이슈 게시판에서만 사용
+    @Column(columnDefinition = "varchar(1000)")
+    private String url;
 
 
 //    @CreatedDate
@@ -97,6 +102,10 @@ public class Post extends BaseEntity{
     public void update(String postTitle, String postContent) {
         this.postTitle = postTitle;
         this.postContent = postContent;
+    }
+
+    public void setPostImagesNull(){
+        this.postImgs = null;
     }
 
     public void increaseLikes() {

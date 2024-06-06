@@ -28,11 +28,8 @@ public class PostSaveRequestDto {
     private Long userNo;
     @NotNull
     private Long boardNo;
-    private List<Img> postImgs; // 파일명만 받아오면 됨
-//    @NotNull
     @Enumerated(value = EnumType.STRING)
     private PostType postType;
-//    @NotNull
     @Enumerated(value = EnumType.STRING)
     private Answered answered;
 
@@ -41,8 +38,27 @@ public class PostSaveRequestDto {
     private Integer studyFee;
     private Integer studyPartyOf;
 
+    private String url;
+
+//    @Builder
+//    public Post toEntity(User user, Board board, List<Img> img){
+//        return Post.builder()
+//                .postTitle(this.postTitle)
+//                .postContent(this.postContent)
+//                .postType(this.postType)
+//                .answered(this.answered)
+//                .user(user)
+//                .board(board)
+//                .postImgs(img)
+//                .studyRegion(this.studyRegion)
+//                .studyFee(this.studyFee)
+//                .studyPartyOf(this.studyPartyOf)
+//                .studyUntil(this.studyUntil)
+//                .build();
+//    }
+
     @Builder
-    public Post toEntity(User user, Board board, List<Img> img){
+    public Post toEntity(User user, Board board){
         return Post.builder()
                 .postTitle(this.postTitle)
                 .postContent(this.postContent)
@@ -50,11 +66,11 @@ public class PostSaveRequestDto {
                 .answered(this.answered)
                 .user(user)
                 .board(board)
-                .postImgs(img)
                 .studyRegion(this.studyRegion)
                 .studyFee(this.studyFee)
                 .studyPartyOf(this.studyPartyOf)
                 .studyUntil(this.studyUntil)
+                .url(this.url)
                 .build();
     }
 

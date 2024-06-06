@@ -6,10 +6,18 @@ import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
 import com.KAU.majorYard.service.PostServiceImpl;
+import com.KAU.majorYard.service.S3Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.net.MalformedURLException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,26 +25,29 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostServiceImpl postService;
+    private final S3Service s3Service;
 
     @PostMapping("/save")
     //@ResponseStatus(HttpStatus.CREATED)
-    public CommonResponse savePost(@RequestBody @Valid PostSaveRequestDto request){
+    public CommonResponse savePost(@RequestPart(value="posting") @Valid PostSaveRequestDto request,
+                                   @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
 
         String resultMsg;
         String resultCode;
 
         try {
-            postService.savePost(request);
+            //postService.savePost(request);
+            postService.savePost(request, imgList); //이미지의 S3연동용
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
         }catch (Exception e){
+            System.out.println(e);
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
         }
-
     }
 
     // 게시판에서 게시글 목록 조회
@@ -137,4 +148,16 @@ public class PostController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+//    @ResponseBody
+//    @GetMapping("/list/{postId}/images/{fileName}")
+//    public Resource showImage(@PathVariable Long postId, @PathVariable Long imgId, @PathVariable String fileName) throws MalformedURLException {
+//        return new UrlResource(s3Service.getFullPath(fileName));
+//    }
+
+//    // 이미지 전체 다운로드
+//    @GetMapping("/list/{postId}/images/download")
+//    public List<ResponseEntity<UrlResource>> downloadImage(@PathVariable Long postId){
+//        return s3Service.downloadImg(postId);
+//    }
 }

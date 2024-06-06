@@ -21,8 +21,6 @@ public class Img {
 
     private String originalFileName;
 
-    private long fileSize;
-
     // Img:Post = N:1
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_no")
