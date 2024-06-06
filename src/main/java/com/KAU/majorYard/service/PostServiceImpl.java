@@ -56,35 +56,35 @@ public class PostServiceImpl{
     }
 
 
-    // 게시판 유형에 따라 적절한 Post 객체를 생성
-    private Post createPostByBoardType(PostSaveRequestDto postDto, User user, Board board) {
-        Post.PostBuilder postBuilder = Post.builder() // 공통 필드
-                .postTitle(postDto.getPostTitle())
-                .postContent(postDto.getPostContent())
-                .user(user)
-                .board(board);
-
-
-        // 게시판 유형에 따라 추가 필드를 설정
-        switch (board.getBoardName()) {
-            case PromotionBoard:
-                postBuilder.postType(postDto.getPostType());
-                break;
-            case QuestionBoard:
-                postBuilder.answered(postDto.getAnswered());
-                break;
-            case StudyBoard:
-                postBuilder.studyRegion(postDto.getStudyRegion())
-                        .studyPartyOf(postDto.getStudyPartyOf())
-                        .studyFee(postDto.getStudyFee())
-                        .studyUntil(postDto.getStudyUntil());
-                break;
-            default:
-                // FreeBoard 및 IssueBoard의 경우 추가 필드 없음
-                break;
-        }
-        return postBuilder.build();
-    }
+//    // 게시판 유형에 따라 적절한 Post 객체를 생성
+//    private Post createPostByBoardType(PostSaveRequestDto postDto, User user, Board board) {
+//        Post.PostBuilder postBuilder = Post.builder() // 공통 필드
+//                .postTitle(postDto.getPostTitle())
+//                .postContent(postDto.getPostContent())
+//                .user(user)
+//                .board(board);
+//
+//
+//        // 게시판 유형에 따라 추가 필드를 설정
+//        switch (board.getBoardName()) {
+//            case PromotionBoard:
+//                postBuilder.postType(postDto.getPostType());
+//                break;
+//            case QuestionBoard:
+//                postBuilder.answered(postDto.getAnswered());
+//                break;
+//            case StudyBoard:
+//                postBuilder.studyRegion(postDto.getStudyRegion())
+//                        .studyPartyOf(postDto.getStudyPartyOf())
+//                        .studyFee(postDto.getStudyFee())
+//                        .studyUntil(postDto.getStudyUntil());
+//                break;
+//            default:
+//                // FreeBoard 및 IssueBoard의 경우 추가 필드 없음
+//                break;
+//        }
+//        return postBuilder.build();
+//    }
 
 
     //Sort 이용한 페이징 전략
