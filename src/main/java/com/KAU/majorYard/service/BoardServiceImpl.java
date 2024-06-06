@@ -5,6 +5,7 @@ import com.KAU.majorYard.dto.request.BoardRequestDto;
 import com.KAU.majorYard.entity.Board;
 import com.KAU.majorYard.entity.Post;
 import com.KAU.majorYard.entity.User;
+import com.KAU.majorYard.entity.majorYard_enum.BoardName;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
 import com.KAU.majorYard.repository.BoardRepository;
@@ -36,6 +37,10 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(postDto.getBoardNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.BOARD_NOT_FOUND));
 
+        if (board.getBoardName() != BoardName.PromotionBoard) {
+            throw new CustomException(CustomErrorCode.INVALID_BOARD_TYPE);
+        }
+
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
     }
@@ -46,6 +51,10 @@ public class BoardServiceImpl implements BoardService {
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.BOARD_NOT_FOUND));
+
+        if (board.getBoardName() != BoardName.QuestionBoard) {
+            throw new CustomException(CustomErrorCode.INVALID_BOARD_TYPE);
+        }
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
@@ -58,6 +67,10 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(postDto.getBoardNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.BOARD_NOT_FOUND));
 
+        if (board.getBoardName() != BoardName.StudyBoard) {
+            throw new CustomException(CustomErrorCode.INVALID_BOARD_TYPE);
+        }
+
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
     }
@@ -69,6 +82,10 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(postDto.getBoardNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.BOARD_NOT_FOUND));
 
+        if (board.getBoardName() != BoardName.FreeBoard) {
+            throw new CustomException(CustomErrorCode.INVALID_BOARD_TYPE);
+        }
+
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
     }
@@ -79,6 +96,10 @@ public class BoardServiceImpl implements BoardService {
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.BOARD_NOT_FOUND));
+
+        if (board.getBoardName() != BoardName.IssueBoard) {
+            throw new CustomException(CustomErrorCode.INVALID_BOARD_TYPE);
+        }
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
