@@ -5,6 +5,7 @@ import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
+import com.KAU.majorYard.service.BoardService;
 import com.KAU.majorYard.service.PostServiceImpl;
 import com.KAU.majorYard.service.S3Service;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import java.util.List;
 public class PostController {
 
     private final PostServiceImpl postService;
+    private final BoardService boardService;
     private final S3Service s3Service;
 
     @PostMapping("/save")
@@ -49,6 +51,48 @@ public class PostController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+    @PostMapping("save/promotion")
+    public CommonResponse savePromotionPost(@RequestBody @Valid BoardRequestDto.promotionBoard request) {
+        boardService.savePromotionPost(request);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("save/question")
+    public CommonResponse saveQuestionPost(@RequestBody @Valid BoardRequestDto.questionBoard request) {
+        boardService.saveQuestionPost(request);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("save/study")
+    public CommonResponse saveStudyPost(@RequestBody @Valid BoardRequestDto.studyBoard request) {
+        boardService.saveStudyPost(request);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("save/free")
+    public CommonResponse saveFreePost(@RequestBody @Valid BoardRequestDto.freeBoard request) {
+        boardService.saveFreePost(request);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("save/issue")
+    public CommonResponse saveIssuePost(@RequestBody @Valid BoardRequestDto.issueBoard request) {
+        boardService.saveIssuePost(request);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+
 
     // 게시판에서 게시글 목록 조회
     @GetMapping("/list")
