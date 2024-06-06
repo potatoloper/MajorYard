@@ -18,18 +18,12 @@ spring:
       stack:
         auto: false
 
+# RDS의 mysql - majoryarddb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/majorYard?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-    username: root
-    password: 12341234
-
-## RDS의 mysql
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://majorYardDB.cf2w2gewqf4l.ap-northeast-2.rds.amazonaws.com:3306/AWSmajorYardDB?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-#    username: admin
-#    password: tksgkrghkdlxld
+    url: jdbc:mysql://majoryarddb.cf2w2gewqf4l.ap-northeast-2.rds.amazonaws.com/majoryarddb?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+    username: admin
+    password: tksgkrghkdlxld
 
   jpa:
     open-in-view: true
