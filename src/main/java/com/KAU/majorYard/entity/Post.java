@@ -31,10 +31,10 @@ public class Post extends BaseEntity{
     private Long id; // post_no
 
     private String postTitle;
+    @Column(columnDefinition = "varchar(4000)")
     private String postContent;
     private int postLike;
     private int postScrab;
-    @Column(columnDefinition = "varchar(4000)")
     private int postcomment;
 
     // 홍보 게시판에서만 사용
