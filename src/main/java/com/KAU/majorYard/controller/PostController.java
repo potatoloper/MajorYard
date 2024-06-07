@@ -10,15 +10,11 @@ import com.KAU.majorYard.service.PostServiceImpl;
 import com.KAU.majorYard.service.S3Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
@@ -114,6 +110,27 @@ public class PostController {
 
         try {
             Page<PostPagingResponseDto> page = postService.findAllPosts(pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+    // 게시판PK별 게시글 목록 조회
+    @GetMapping("{boardNo}/list")
+    public CommonResponse getPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
             resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
