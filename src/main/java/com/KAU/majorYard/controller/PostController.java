@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -29,6 +30,56 @@ public class PostController {
     private final BoardService boardService;
     private final S3Service s3Service;
 
+    /* 게시글 저장 */
+
+    @PostMapping("free/save")
+    public CommonResponse saveFreePost(@RequestPart(value="posting") @Valid BoardRequestDto.freeBoard request,
+                                       @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+        boardService.saveFreePost(request, imgList);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("promotion/save")
+    public CommonResponse savePromotionPost(@RequestPart(value="posting") @Valid BoardRequestDto.promotionBoard request,
+                                            @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+        boardService.savePromotionPost(request, imgList);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("question/save")
+    public CommonResponse saveQuestionPost(@RequestPart(value="posting") @Valid BoardRequestDto.questionBoard request,
+                                           @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+        boardService.saveQuestionPost(request, imgList);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("issue/save")
+    public CommonResponse saveIssuePost(@RequestPart(value="posting") @Valid BoardRequestDto.issueBoard request,
+                                        @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+        boardService.saveIssuePost(request, imgList);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+    @PostMapping("study/save")
+    public CommonResponse saveStudyPost(@RequestPart(value="posting") @Valid BoardRequestDto.studyBoard request,
+                                        @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+        boardService.saveStudyPost(request, imgList);
+        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+        return new CommonResponse(resultCode, resultMsg);
+    }
+
+
+
+    //게시글 저장
     @PostMapping("/save")
     //@ResponseStatus(HttpStatus.CREATED)
     public CommonResponse savePost(@RequestPart(value="posting") @Valid PostSaveRequestDto request,
@@ -52,52 +103,11 @@ public class PostController {
         }
     }
 
-    @PostMapping("save/promotion")
-    public CommonResponse savePromotionPost(@RequestBody @Valid BoardRequestDto.promotionBoard request) {
-        boardService.savePromotionPost(request);
-        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-        return new CommonResponse(resultCode, resultMsg);
-    }
-
-    @PostMapping("save/question")
-    public CommonResponse saveQuestionPost(@RequestBody @Valid BoardRequestDto.questionBoard request) {
-        boardService.saveQuestionPost(request);
-        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-        return new CommonResponse(resultCode, resultMsg);
-    }
-
-    @PostMapping("save/study")
-    public CommonResponse saveStudyPost(@RequestBody @Valid BoardRequestDto.studyBoard request) {
-        boardService.saveStudyPost(request);
-        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-        return new CommonResponse(resultCode, resultMsg);
-    }
-
-    @PostMapping("save/free")
-    public CommonResponse saveFreePost(@RequestBody @Valid BoardRequestDto.freeBoard request) {
-        boardService.saveFreePost(request);
-        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-        return new CommonResponse(resultCode, resultMsg);
-    }
-
-    @PostMapping("save/issue")
-    public CommonResponse saveIssuePost(@RequestBody @Valid BoardRequestDto.issueBoard request) {
-        boardService.saveIssuePost(request);
-        String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-        String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-        return new CommonResponse(resultCode, resultMsg);
-    }
-
-
 
     // 게시판에서 게시글 목록 조회
     @GetMapping("/list")
     //@ResponseStatus(HttpStatus.OK)
-    public CommonResponse getPostByPaging(@RequestParam(value = "page") int pageNum, @RequestParam int size, @RequestParam String sort){
+    public CommonResponse getPostByPaging(@RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
 
         String resultMsg;
         String resultCode;

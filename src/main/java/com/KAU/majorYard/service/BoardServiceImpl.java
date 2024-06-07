@@ -15,6 +15,10 @@ import com.KAU.majorYard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,15 +27,10 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
     @Transactional
-    @Override
-    public void saveboard(BoardRequestDto boardDto) {
-        // Method implementation (if needed)
-    }
-
-    @Transactional
-    public void savePromotionPost(BoardRequestDto.promotionBoard postDto) {
+    public void savePromotionPost(BoardRequestDto.promotionBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
@@ -43,10 +42,16 @@ public class BoardServiceImpl implements BoardService {
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
     }
 
     @Transactional
-    public void saveQuestionPost(BoardRequestDto.questionBoard postDto) {
+    public void saveQuestionPost(BoardRequestDto.questionBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
@@ -58,10 +63,16 @@ public class BoardServiceImpl implements BoardService {
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
     }
 
     @Transactional
-    public void saveStudyPost(BoardRequestDto.studyBoard postDto) {
+    public void saveStudyPost(BoardRequestDto.studyBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
@@ -73,10 +84,16 @@ public class BoardServiceImpl implements BoardService {
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
     }
 
     @Transactional
-    public void saveFreePost(BoardRequestDto.freeBoard postDto) {
+    public void saveFreePost(BoardRequestDto.freeBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
@@ -88,10 +105,16 @@ public class BoardServiceImpl implements BoardService {
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
     }
 
     @Transactional
-    public void saveIssuePost(BoardRequestDto.issueBoard postDto) {
+    public void saveIssuePost(BoardRequestDto.issueBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postDto.getUserNo())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Board board = boardRepository.findById(postDto.getBoardNo())
@@ -103,6 +126,12 @@ public class BoardServiceImpl implements BoardService {
 
         Post post = createPostByBoardType(postDto, user, board);
         postRepository.save(post);
+
+        if(multipartFiles != null){
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
     }
 
     private Post createPostByBoardType(BoardRequestDto.promotionBoard postDto, User user, Board board) {
@@ -153,6 +182,8 @@ public class BoardServiceImpl implements BoardService {
                 .postContent(postDto.getPostContent())
                 .user(user)
                 .board(board)
+                .url(postDto.getUrl())
                 .build();
     }
+
 }
