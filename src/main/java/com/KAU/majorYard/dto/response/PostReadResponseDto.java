@@ -23,15 +23,26 @@ public class PostReadResponseDto {
     private int postScrab;
     private int postcomment;
 
+    //홍보게시판 특화
     @Enumerated(value = EnumType.STRING)
     private PostType postType;
+
+    //질문게시판 특화
     @Enumerated(value = EnumType.STRING)
     private Answered answered;
+
+    /* 스터디게시판 특화 */
+    private String studyRegion;
+    private Integer studyPartyOf;
+    private Integer studyFee;
+    private String studyUntil;
+
+    //시사이슈 게시판 특화
+    private String contentUrl;
 
     private String nickName;
     private String modifiedTime;
     private List<String> imgUrls;
-    private String contentUrl;
 
     @Builder
     public PostReadResponseDto(Post post, List<String> imgUrls){
@@ -43,6 +54,10 @@ public class PostReadResponseDto {
         this.postcomment = post.getPostcomment();
         this.postType = post.getPostType();
         this.answered = post.getAnswered();
+        this.studyRegion = post.getStudyRegion();
+        this.studyPartyOf = post.getStudyPartyOf();
+        this.studyFee = post.getStudyFee();
+        this.studyUntil = post.getStudyUntil();
         this.nickName = post.getUser().getNickName();
         this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.imgUrls = imgUrls;

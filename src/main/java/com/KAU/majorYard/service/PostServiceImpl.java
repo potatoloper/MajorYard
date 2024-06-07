@@ -9,8 +9,6 @@ import com.KAU.majorYard.entity.Board;
 import com.KAU.majorYard.entity.Img;
 import com.KAU.majorYard.entity.Post;
 import com.KAU.majorYard.entity.User;
-import com.KAU.majorYard.entity.majorYard_enum.BoardName;
-import com.KAU.majorYard.entity.majorYard_enum.PostType;
 import com.KAU.majorYard.repository.BoardRepository;
 import com.KAU.majorYard.repository.ImgRepository;
 import com.KAU.majorYard.repository.PostRepository;
@@ -25,10 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,7 +83,7 @@ public class PostServiceImpl{
 //    }
 
 
-    //Sort 이용한 페이징 전략
+    //Sort 이용한 페이징
     @Transactional(readOnly = true)
     public Page<PostPagingResponseDto> findAllPosts(int page, int size, String sortStr) {
 
@@ -95,6 +91,20 @@ public class PostServiceImpl{
         Pageable pageable = PageRequest.of(page-1, size, sort);
 
         Page<Post> postPages = postRepository.findAll(pageable);
+
+        Page<PostPagingResponseDto> postDTOPages = postPages.map(postPage -> new PostPagingResponseDto(postPage,s3Service.getFullPath(postPage.getPostImgs())));
+        return postDTOPages;
+
+    }
+
+    // 게시판 PK별 Sort 이용한 페이징
+    @Transactional(readOnly = true)
+    public Page<PostPagingResponseDto> findAllPostsByBoardPK(Long boardNo, int page, int size, String sortStr) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortStr), "id");
+        Pageable pageable = PageRequest.of(page-1, size, sort);
+
+        Page<Post> postPages = postRepository.findAllByBoardId(boardNo, pageable);
 
         Page<PostPagingResponseDto> postDTOPages = postPages.map(postPage -> new PostPagingResponseDto(postPage,s3Service.getFullPath(postPage.getPostImgs())));
         return postDTOPages;
