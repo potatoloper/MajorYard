@@ -74,6 +74,206 @@ public class PostController {
     }
 
 
+    /* 게시판PK별 게시글 목록 조회 */
+
+    @GetMapping("free/list/{boardNo}")
+    public CommonResponse getFreePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+    @GetMapping("promotion/list/{boardNo}")
+    public CommonResponse getPromotionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+    @GetMapping("question/list/{boardNo}")
+    public CommonResponse getQuestionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+    @GetMapping("issue/list/{boardNo}")
+    public CommonResponse getIssuePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+
+    @GetMapping("study/list/{boardNo}")
+    public CommonResponse getStudyPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+
+        String resultMsg;
+        String resultCode;
+
+        try {
+            Page<PostPagingResponseDto> page = postService.findAllPostsByBoardPK(boardNo, pageNum, size, sort);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, page);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+
+    }
+
+
+    /* 게시글 상세조회 */
+
+
+    @GetMapping("free/list/{postNo}/detail")
+    public CommonResponse getFreePostById(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            PostReadResponseDto post = postService.findPostById(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, post);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    @GetMapping("promotion/list/{postNo}/detail")
+    public CommonResponse getPromotionPostById(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            PostReadResponseDto post = postService.findPostById(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, post);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    @GetMapping("question/list/{postNo}/detail")
+    public CommonResponse getQuestionPostById(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            PostReadResponseDto post = postService.findPostById(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, post);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    @GetMapping("issue/list/{postNo}/detail")
+    public CommonResponse getIssuePostById(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            PostReadResponseDto post = postService.findPostById(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, post);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    @GetMapping("study/list/{postNo}/detail")
+    public CommonResponse getStudyPostById(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            PostReadResponseDto post = postService.findPostById(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, post);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    // * 작업용 * //
+
 
     //게시글 저장
     @PostMapping("/save")
