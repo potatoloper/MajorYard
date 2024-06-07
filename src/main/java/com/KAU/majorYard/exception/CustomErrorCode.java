@@ -16,7 +16,9 @@ public enum CustomErrorCode {
     POST_SAVE_ERROR(HttpStatus.NOT_FOUND, 5005, "게시글 저장 중 오류가 발생했습니다."),
 
     // 4000 : Conflict
-    DUPLICATE_USER(HttpStatus.CONFLICT, 4001, "이미 등록된 회원입니다.");
+    DUPLICATE_USER(HttpStatus.CONFLICT, 4001, "이미 등록된 회원입니다."),
+    INVALID_BOARD_TYPE(HttpStatus.CONFLICT, 4002, "잘못된 게시판 유형입니다.");
+
 
 
     private final HttpStatus httpStatus;
