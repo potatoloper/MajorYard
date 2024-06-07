@@ -53,8 +53,8 @@ public class BoardRequestDto {
 
     @Data
     @AllArgsConstructor
-//    @NoArgsConstructor
+    @NoArgsConstructor
     public static class issueBoard extends BasePostDto {
-        // IssueBoard 특화 필드 없음
+        private String url;
     }
 }
