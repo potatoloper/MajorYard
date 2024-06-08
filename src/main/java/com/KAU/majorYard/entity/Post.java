@@ -31,7 +31,7 @@ public class Post extends BaseEntity{
     private Long id; // post_no
 
     private String postTitle;
-    @Column(columnDefinition = "varchar(4000)")
+    @Column(columnDefinition = "varchar(8000)")
     private String postContent;
     private int postLike;
     private int postScrab;
