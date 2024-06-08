@@ -3,6 +3,7 @@ package com.KAU.majorYard.controller;
 import com.KAU.majorYard.dto.CommonResponse;
 import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
+import com.KAU.majorYard.dto.response.CommentAllByPostResponseDto;
 import com.KAU.majorYard.dto.response.CommentChildReadResponse;
 import com.KAU.majorYard.dto.response.CommentParentReadResponse;
 import com.KAU.majorYard.dto.response.CommentReadResponseDto;
@@ -57,25 +58,6 @@ public class CommentController {
         }
     }
 
-    //댓글 페이징 조회
-//    @GetMapping("/posts/{postNo}/comments")
-//    public CommonResponse getAllComment(@PathVariable Long postNo, @RequestBody @Valid CommentPagingRequestDto request){
-//        String resultMsg;
-//        String resultCode;
-//
-//        try {
-//            Page<CommentPagingResponseDto> page = commentService.findAllComments(postNo, request);
-//            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
-//            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
-//            return new CommonResponse(resultCode, resultMsg, page);
-//
-//        }catch (Exception e){
-//            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
-//            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
-//            return new CommonResponse(resultCode, resultMsg);
-//        }
-//    }
-
     //부모 댓글들만 모두 조회
     @GetMapping("/posts/{postNo}/comments")
     public CommonResponse getParentComments(@PathVariable Long postNo/*, @RequestBody @Valid CommentParentReadRequest request*/){
@@ -126,6 +108,26 @@ public class CommentController {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, comment);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    // 게시글의 모든 댓글 조회 (부모 + 자식 모두)
+    // BE 작업용으로 쓸것. 시간복잡도가 커서 실제로 사용하긴 어렵다.
+    @GetMapping("/posts/{postNo}/comments/all")
+    public CommonResponse getAllComments(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            List<CommentAllByPostResponseDto> comments = commentService.findAllComments(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, comments);
 
         }catch (Exception e){
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
