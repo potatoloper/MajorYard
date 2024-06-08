@@ -2,7 +2,7 @@ package com.KAU.majorYard.service;
 
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.CommentChildReadResponse;
-import com.KAU.majorYard.dto.response.CommentPagingResponseDto;
+import com.KAU.majorYard.dto.response.CommentAllByPostResponseDto;
 import com.KAU.majorYard.dto.response.CommentParentReadResponse;
 import com.KAU.majorYard.dto.response.CommentReadResponseDto;
 import com.KAU.majorYard.entity.Comment;
@@ -12,15 +12,10 @@ import com.KAU.majorYard.repository.CommentRepository;
 import com.KAU.majorYard.repository.PostRepository;
 import com.KAU.majorYard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -51,17 +46,34 @@ public class CommentService {
         post.increaseComments();
     }
 
-    //댓글 페이징
+    //댓글 전체 조회 (부모+자식). 시간복잡도가 커서 실제로 사용하긴 어려울 것
     @Transactional(readOnly = true)
-    public Page<CommentPagingResponseDto> findAllComments(Long postNo, CommentPagingRequestDto requestDto){
+    public List<CommentAllByPostResponseDto> findAllComments(Long postNo){
         Post post = postRepository.findById(postNo).orElseThrow(() -> new RuntimeException("게시글이 확인되지 않습니다."));
+        List<Comment> comments = post.getPostComments();
+        List<CommentAllByPostResponseDto> responseList = new ArrayList<>();
+        List<CommentAllByPostResponseDto> childComments = new ArrayList<>();
 
-        Sort sort = Sort.by(Sort.Direction.fromString(requestDto.getSort()), "id");
-        Pageable pageable = PageRequest.of(requestDto.getPage()-1, requestDto.getSize(), sort);
-        Page<Comment> commentPages = commentRepository.findAll(pageable);
+        if (comments != null){
+            for (Comment parent : comments){
+                if(parent.getParentComment() == null){
+                    if(parent.getChildComments() != null){
+                        for (Comment child : parent.getChildComments()){
+                            childComments.add(new CommentAllByPostResponseDto(child));
+                        }
+                        List<CommentAllByPostResponseDto> tmp = new ArrayList<>(childComments);
+                        responseList.add(new CommentAllByPostResponseDto(parent, tmp));
+                    }
+                    else {
+                        responseList.add(new CommentAllByPostResponseDto(parent));
+                    }
 
-        Page<CommentPagingResponseDto> commentDTOPages = commentPages.map(commentPage -> new CommentPagingResponseDto(commentPage));
-        return commentDTOPages;
+                }
+                childComments.clear();
+            }
+        }
+
+        return responseList;
     }
 
     //댓글 하나 조회
