@@ -157,10 +157,13 @@ public class PostServiceImpl{
 
 
 
-    // 홍보게시글 답변여부 YES로 업데이트
+    // 질문게시글 답변여부 YES로 업데이트
     @Transactional
-    public void pmtUpdateAnsweredPost(Long id){
+    public void pmtUpdateAnsweredPost(Long id) throws Exception {
         Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+        if(post.getBoard().getBoardName().toString() != "QuestionBoard"){
+            throw new IllegalArgumentException("질문게시판의 게시글이 아닙니다.");
+        }
         post.updateAnswered();
     }
 
