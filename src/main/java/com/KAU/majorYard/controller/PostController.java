@@ -25,7 +25,6 @@ public class PostController {
 
     private final PostServiceImpl postService;
     private final BoardService boardService;
-    private final LikeService likeService;
     private final S3Service s3Service;
 
     /* 게시글 저장 */
@@ -273,24 +272,6 @@ public class PostController {
         }
     }
 
-    // 게시글 좋아요
-    @PostMapping("study/list/{postNo}/detail/{userNo}/like")
-    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
-        String resultMsg;
-        String resultCode;
-
-        try {
-            likeService.PostLikeUp(userNo, postNo);
-            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-
-        }catch (Exception e){
-            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-        }
-    }
 
     /* 질문게시판 */
 
