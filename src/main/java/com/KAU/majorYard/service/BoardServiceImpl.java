@@ -5,6 +5,7 @@ import com.KAU.majorYard.dto.request.BoardRequestDto;
 import com.KAU.majorYard.entity.Board;
 import com.KAU.majorYard.entity.Post;
 import com.KAU.majorYard.entity.User;
+import com.KAU.majorYard.entity.majorYard_enum.Answered;
 import com.KAU.majorYard.entity.majorYard_enum.BoardName;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
@@ -148,7 +149,7 @@ public class BoardServiceImpl implements BoardService {
         return Post.builder()
                 .postTitle(postDto.getPostTitle())
                 .postContent(postDto.getPostContent())
-                .answered(postDto.getAnswered())
+                .answered(Answered.N)
                 .user(user)
                 .board(board)
                 .build();
