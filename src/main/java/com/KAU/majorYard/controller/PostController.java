@@ -6,6 +6,7 @@ import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
 import com.KAU.majorYard.service.BoardService;
+import com.KAU.majorYard.service.LikeService;
 import com.KAU.majorYard.service.PostServiceImpl;
 import com.KAU.majorYard.service.S3Service;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ public class PostController {
 
     private final PostServiceImpl postService;
     private final BoardService boardService;
+    private final LikeService likeService;
     private final S3Service s3Service;
 
     /* 게시글 저장 */
@@ -271,6 +273,47 @@ public class PostController {
         }
     }
 
+    // 게시글 좋아요
+    @PostMapping("study/list/{postNo}/detail/{userNo}/like")
+    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            likeService.PostLikeUp(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    /* 질문게시판 */
+
+    // 질문게시글 답변상태 Y로 업데이트.
+    // 질문게시글이 아닌 다른 게시판의 글에 적용시키면 에러 발생.
+    @PutMapping("question/list/{postNo}")
+    public CommonResponse updateAnsweredPost(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            postService.pmtUpdateAnsweredPost(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
 
     // * 작업용 * //
 
@@ -404,24 +447,7 @@ public class PostController {
 //        }
 //    }
 
-    // 질문게시판 답변상태 Y로 업데이트. 게시판들이 나눠지고 추가되어야 하는 사항이기에, url은 임시로 둠
-    @PutMapping("/list/{id}/proboard")
-    public CommonResponse updateAnsweredPost(@PathVariable Long id){
-        String resultMsg;
-        String resultCode;
 
-        try {
-            postService.pmtUpdateAnsweredPost(id);
-            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-
-        }catch (Exception e){
-            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-        }
-    }
 
     // 게시글 삭제
     @DeleteMapping("/list/{id}")
