@@ -25,6 +25,7 @@ public class PostController {
 
     private final PostServiceImpl postService;
     private final BoardService boardService;
+    private final LikeService likeService;
     private final S3Service s3Service;
 
     /* 게시글 저장 */
@@ -272,6 +273,44 @@ public class PostController {
         }
     }
 
+    // 게시글 좋아요
+    @PostMapping("list/{postNo}/detail/{userNo}/like")
+    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            likeService.PostLikeUp(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    // 게시글 좋아요 해제
+    @DeleteMapping("list/{postNo}/detail/{userNo}/{likeNo}")
+    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo, @PathVariable Long likeNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            likeService.PostLikeDown(userNo, postNo, likeNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
 
     /* 질문게시판 */
 
