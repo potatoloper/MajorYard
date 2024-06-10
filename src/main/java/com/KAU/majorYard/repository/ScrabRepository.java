@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ScrabRepository extends JpaRepository<Scrab, Long> {
     List<Scrab> findAllByUserId (Long user_no);
+    Scrab findByUserId (Long user_no);
 }

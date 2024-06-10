@@ -5,10 +5,8 @@ import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
-import com.KAU.majorYard.service.BoardService;
-import com.KAU.majorYard.service.LikeService;
-import com.KAU.majorYard.service.PostServiceImpl;
-import com.KAU.majorYard.service.S3Service;
+import com.KAU.majorYard.dto.response.ScrabResponseDto;
+import com.KAU.majorYard.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +24,7 @@ public class PostController {
     private final PostServiceImpl postService;
     private final BoardService boardService;
     private final LikeService likeService;
+    private final ScrabService scrabService;
     private final S3Service s3Service;
 
     /* 게시글 저장 */
@@ -294,13 +293,13 @@ public class PostController {
 
 
     // 게시글 좋아요 해제
-    @DeleteMapping("list/{postNo}/detail/{userNo}/{likeNo}")
-    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo, @PathVariable Long likeNo){
+    @DeleteMapping("list/{postNo}/detail/{userNo}/like")
+    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
         String resultMsg;
         String resultCode;
 
         try {
-            likeService.PostLikeDown(userNo, postNo, likeNo);
+            likeService.PostLikeDown(userNo, postNo);
             resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -311,6 +310,46 @@ public class PostController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+    // 게시글 스크랩
+    @PostMapping("list/{postNo}/detail/{userNo}/scrab")
+    public CommonResponse setScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            scrabService.PostScrabUp(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    // 게시글 스크랩 해제
+    @DeleteMapping("list/{postNo}/detail/{userNo}/scrab")
+    public CommonResponse deleteScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            scrabService.PostScrabDown(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
 
     /* 질문게시판 */
 

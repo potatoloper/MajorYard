@@ -26,9 +26,14 @@ public class ScrabService {
     private final S3Service s3Service;
 
     @Transactional
-    public void PostScrabUp(Long userNo, Long postNo){
+    public void PostScrabUp(Long userNo, Long postNo) throws IllegalAccessException {
         User user = userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Post post = postRepository.findById(postNo).orElseThrow(()-> new CustomException(CustomErrorCode.POST_NOT_FOUND));
+
+        // 이미 유저가 해당 게시글에 스크랩을 눌렀을 때
+        if (scrabRepository.findByUserId(userNo) != null){
+            throw new IllegalAccessException("이미 스크랩을 눌렀습니다!");
+        }
 
         Scrab scrab = scrabRepository.save(Scrab.builder()
                 .user(user)
@@ -38,11 +43,12 @@ public class ScrabService {
     }
 
     @Transactional
-    public void PostScrabDown(Long userNo, Long postNo, Long scrabNo){
+    public void PostScrabDown(Long userNo, Long postNo){
         User user = userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Post post = postRepository.findById(postNo).orElseThrow(()-> new CustomException(CustomErrorCode.POST_NOT_FOUND));
 
-        scrabRepository.deleteById(scrabNo);
+        Scrab scrab = scrabRepository.findByUserId(userNo);
+        scrabRepository.delete(scrab);
         post.decreaseScarbs();
     }
 
