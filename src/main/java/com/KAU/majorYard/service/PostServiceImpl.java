@@ -125,35 +125,33 @@ public class PostServiceImpl{
         return new PostReadResponseDto(post, imgUrls);
     }
 
-    // 게시글 업데이트 (제목, 내용만)
-    @Transactional
-    public void updatePosts(Long id, PostUpdateRequestDto postDto){
-        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
-        post.update(postDto.getPostTitle(), postDto.getPostContent());
-    }
-
-
-    // 게시글 업데이트 TODO : 이전 이미지가 이미지 테이블에서 삭제되지 않는 에러 고치기
+//    // 게시글 업데이트 (제목, 내용만)
 //    @Transactional
-//    public void updatePosts(Long id, PostUpdateRequestDto postDto, List<MultipartFile> multipartFiles) throws IOException {
+//    public void updatePosts(Long id, PostUpdateRequestDto postDto){
 //        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
-//        List<Img> imgs = post.getPostImgs();
-//        System.out.println("imgs:  "+imgs);
-//
-//        if(multipartFiles != null){
-//            if(imgs != null) {
-//                for (Img img : imgs) {
-//                    s3Service.deleteImage(img.getId());
-//                }
-//                post.setPostImagesNull();
-//            }
-//            for (MultipartFile multipartFile : multipartFiles){
-//                s3Service.saveImage(multipartFile, post);
-//            }
-//        }
-//
 //        post.update(postDto.getPostTitle(), postDto.getPostContent());
 //    }
+
+
+    // 게시글 업데이트
+    @Transactional
+    public void updatePosts(Long id, PostUpdateRequestDto postDto, List<MultipartFile> multipartFiles) throws IOException {
+        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+        List<Img> imgs = imgRepository.findAllByPostId(post.getId());
+
+        if(multipartFiles != null){
+            if (imgs != null) {
+                for (Img img : imgs) {
+                    s3Service.deleteImage(img.getId());
+                }
+            }
+            for (MultipartFile multipartFile : multipartFiles){
+                s3Service.saveImage(multipartFile, post);
+            }
+        }
+
+        post.update(postDto.getPostTitle(), postDto.getPostContent());
+    }
 
 
 
