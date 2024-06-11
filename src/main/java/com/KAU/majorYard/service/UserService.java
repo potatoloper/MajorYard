@@ -39,10 +39,10 @@ public class UserService {
                 .nickName(credentials.getNickName())
                 .password(credentials.getPassword())
                 .userPhone(credentials.getUserPhone())
-                .gender(Gender.valueOf(credentials.getGender()))
+                .gender(credentials.getGender())
                 .userBirth(credentials.getUserBirth())
                 .schoolEmail(credentials.getSchoolEmail())
-                .role(Role.valueOf(credentials.getRole()))
+                .role(credentials.getRole())
                 .department(department)
                 .build();
 
