@@ -35,10 +35,9 @@ public class Department {
 
 
 
-    //    Department:User = 1:1
-    @OneToOne(mappedBy = "department")
-    private User user;
-
+    //    Department:User = 1:N
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<User> departmentUsers= new ArrayList<>();
 
 
 

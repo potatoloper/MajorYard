@@ -48,12 +48,16 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String userProfImg;
 
+    @Enumerated(value = EnumType.STRING)
     private Gender gender; // male or female
 
+    @Enumerated(value = EnumType.STRING)
     private Role role; // user or admin
 
+    @Enumerated(value = EnumType.STRING)
     private Grade grade; //one two three four
 
+    @Enumerated(value = EnumType.STRING)
     private UserAvailable userAvailable; // yes, no
 
     // User:Scarb = 1:N
@@ -74,9 +78,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> userComments = new ArrayList<>();
 
-    // 주테이블(User) 외래키 단방향
-    // User:Department = 1:1
-    @OneToOne(cascade = {CascadeType.ALL, CascadeType.PERSIST}, orphanRemoval = true)
+
+    //  User:Department = N:1
+    @ManyToOne
     @JoinColumn(name = "department_no")
     private Department department;
 
