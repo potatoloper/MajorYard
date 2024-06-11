@@ -36,7 +36,6 @@ public class User extends BaseEntity {
     private String password;
 
 
-
     @Column(name="user_phone")
     private String userPhone;
 
@@ -48,13 +47,13 @@ public class User extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String userProfImg;
-    @Enumerated(value = EnumType.STRING)
+
     private Gender gender; // male or female
-    @Enumerated(value = EnumType.STRING)
+
     private Role role; // user or admin
-    @Enumerated(value = EnumType.STRING)
+
     private Grade grade; //one two three four
-    @Enumerated(value = EnumType.STRING)
+
     private UserAvailable userAvailable; // yes, no
 
     // User:Scarb = 1:N
