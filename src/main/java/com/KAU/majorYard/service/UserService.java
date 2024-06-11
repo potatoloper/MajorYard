@@ -57,4 +57,8 @@ public class UserService {
         }
         throw new CustomException(CustomErrorCode.USER_NOT_FOUND); // 로그인 실패
     }
+
+    public void logout(){
+        System.out.println("로그아웃 되었습니다.");
+    }
 }
