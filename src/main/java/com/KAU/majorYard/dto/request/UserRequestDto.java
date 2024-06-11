@@ -1,6 +1,8 @@
 package com.KAU.majorYard.dto.request;
 
 import com.KAU.majorYard.entity.BaseEntity;
+import com.KAU.majorYard.entity.majorYard_enum.Gender;
+import com.KAU.majorYard.entity.majorYard_enum.Role;
 import lombok.*;
 
 @Getter
@@ -17,11 +19,11 @@ public class UserRequestDto extends BaseEntity {
     private String password;
     private String checkedPassword; // 회원가입 시 필요
     private String userPhone;
-    private String gender;
+    private Gender gender;
     private String userBirth;
     private DepartmentDto department;
     private String schoolEmail;
-    private String role;
+    private Role role;
 
     @Getter
     @Setter
