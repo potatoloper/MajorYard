@@ -5,9 +5,8 @@ import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
-import com.KAU.majorYard.service.BoardService;
-import com.KAU.majorYard.service.PostServiceImpl;
-import com.KAU.majorYard.service.S3Service;
+import com.KAU.majorYard.dto.response.ScrabResponseDto;
+import com.KAU.majorYard.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +23,8 @@ public class PostController {
 
     private final PostServiceImpl postService;
     private final BoardService boardService;
+    private final LikeService likeService;
+    private final ScrabService scrabService;
     private final S3Service s3Service;
 
     /* 게시글 저장 */
@@ -271,6 +272,107 @@ public class PostController {
         }
     }
 
+    // 게시글 좋아요
+    @PostMapping("list/{postNo}/detail/{userNo}/like")
+    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            likeService.PostLikeUp(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    // 게시글 좋아요 해제
+    @DeleteMapping("list/{postNo}/detail/{userNo}/like")
+    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            likeService.PostLikeDown(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    // 게시글 스크랩
+    @PostMapping("list/{postNo}/detail/{userNo}/scrab")
+    public CommonResponse setScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            scrabService.PostScrabUp(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    // 게시글 스크랩 해제
+    @DeleteMapping("list/{postNo}/detail/{userNo}/scrab")
+    public CommonResponse deleteScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            scrabService.PostScrabDown(userNo, postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+
+    /* 질문게시판 */
+
+    // 질문게시글 답변상태 Y로 업데이트.
+    // 질문게시글이 아닌 다른 게시판의 글에 적용시키면 에러 발생.
+    @PutMapping("question/list/{postNo}")
+    public CommonResponse updateAnsweredPost(@PathVariable Long postNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            postService.pmtUpdateAnsweredPost(postNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
 
     // * 작업용 * //
 
@@ -363,31 +465,9 @@ public class PostController {
     }
 
     // 게시글 업데이트 (제목, 내용만)
-    @PutMapping("/list/{id}")
-    //@ResponseStatus(HttpStatus.OK)
-    public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
-        String resultMsg;
-        String resultCode;
-
-        try {
-            postService.updatePosts(id, request);
-            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-
-        }catch (Exception e){
-            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
-            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
-            return new CommonResponse(resultCode, resultMsg);
-        }
-    }
-
-    // 게시글 업데이트
 //    @PutMapping("/list/{id}")
 //    //@ResponseStatus(HttpStatus.OK)
-//    public CommonResponse updatePost(@PathVariable Long id,
-//                                     @RequestPart(value="posting") @Valid PostUpdateRequestDto request,
-//                                     @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
+//    public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
 //        String resultMsg;
 //        String resultCode;
 //
@@ -404,14 +484,17 @@ public class PostController {
 //        }
 //    }
 
-    // 질문게시판 답변상태 Y로 업데이트. 게시판들이 나눠지고 추가되어야 하는 사항이기에, url은 임시로 둠
-    @PutMapping("/list/{id}/proboard")
-    public CommonResponse updateAnsweredPost(@PathVariable Long id){
+    // 게시글 업데이트
+    @PutMapping("/list/{id}")
+    //@ResponseStatus(HttpStatus.OK)
+    public CommonResponse updatePost(@PathVariable Long id,
+                                     @RequestPart(value="posting") @Valid PostUpdateRequestDto request,
+                                     @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
         String resultMsg;
         String resultCode;
 
         try {
-            postService.pmtUpdateAnsweredPost(id);
+            postService.updatePosts(id, request, imgList);
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -422,6 +505,8 @@ public class PostController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+
 
     // 게시글 삭제
     @DeleteMapping("/list/{id}")

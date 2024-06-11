@@ -100,8 +100,12 @@ public class Post extends BaseEntity{
     private Board board;
 
     public void update(String postTitle, String postContent) {
-        this.postTitle = postTitle;
-        this.postContent = postContent;
+        if (postTitle != null){
+            this.postTitle = postTitle;
+        }
+        if (postContent != null){
+            this.postContent = postContent;
+        }
     }
 
     public void setPostImagesNull(){
