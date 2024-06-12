@@ -27,7 +27,7 @@ public class LikeService {
         Post post = postRepository.findById(postNo).orElseThrow(()-> new CustomException(CustomErrorCode.POST_NOT_FOUND));
 
         // 이미 유저가 해당 게시글에 좋아요를 눌렀을 때
-        if (likeRepository.findByUserId(userNo) != null){
+        if (likeRepository.findByUserIdAndPostId(userNo, postNo) != null){
             throw new IllegalAccessException("이미 좋아요를 눌렀습니다!");
         }
 
