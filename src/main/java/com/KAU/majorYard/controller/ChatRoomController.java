@@ -3,7 +3,7 @@ package com.KAU.majorYard.controller;
 
 import com.KAU.majorYard.dto.request.ChatMessageRequestDto;
 import com.KAU.majorYard.dto.request.ChatRoomRequestDto;
-import com.KAU.majorYard.dto.response.ChatMessageResponse;
+import com.KAU.majorYard.dto.response.ChatMessageResponseDto;
 import com.KAU.majorYard.dto.response.ChatRoomResponseDto;
 import com.KAU.majorYard.entity.ChatMessage;
 import com.KAU.majorYard.entity.ChatRoom;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,23 +71,28 @@ public class ChatRoomController {
     }
 
 
-    @PostMapping("/{roomId}/messages")
-    public ResponseEntity<?> saveChatMessage(@PathVariable Long roomId, @RequestBody ChatMessageRequestDto requestDto) {
-        try {
-            ChatMessage savedMessage = chatMessageService.createAndSaveMessage(roomId, requestDto);
-            return ResponseEntity.ok(new ChatMessageResponse("Message saved successfully."));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ChatMessageResponse("Error saving the message."));
-        }
-    }
 
-//    @GetMapping("/chat/{roomId}/messages")
-//    public ResponseEntity<List<ChatMessageResponseDto>> getMessages(@PathVariable Long roomId) {
-//        // 메시지 조회 로직 구현
+//    @PostMapping("/{roomId}/messages")
+//    public ResponseEntity<?> saveChatMessage(@PathVariable Long roomId, @RequestBody ChatMessageRequestDto requestDto) {
+//        try {
+//            ChatMessage savedMessage = chatMessageService.createAndSaveMessage(roomId, requestDto);
+//            return ResponseEntity.ok(new ChatMessageResponseDto("Message saved successfully."));
+//        } catch (EntityNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ChatMessageResponse("Error saving the message."));
+//        }
 //    }
 
+
+    @GetMapping("/{roomId}/messages")
+    public ResponseEntity<List<ChatMessageResponseDto>> getMessages(@PathVariable Long roomId) {
+        List<ChatMessageResponseDto> messages = chatMessageService.getMessages(roomId);
+        if (messages.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(messages);
+    }
 
 
     //    @GetMapping("/chat/create")

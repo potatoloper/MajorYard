@@ -1,6 +1,8 @@
 insert into Department (department_no,departmentName,majorCategory) values (1, 'software', 'ENGINEERING');
 insert into Department (department_no,departmentName,majorCategory) values (2, 'visual design', 'ART');
 
+
+
 insert into Board (board_no,boardName,department_no) values (1, 'FreeBoard',1);
 insert into Board (board_no,boardName,department_no) values (2, 'PromotionBoard',1);
 insert into Board (board_no,boardName,department_no) values (3, 'QuestionBoard',1);
