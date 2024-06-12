@@ -40,6 +40,5 @@ public class Department {
     private List<User> departmentUsers= new ArrayList<>();
 
 
-
-
+   
 }
