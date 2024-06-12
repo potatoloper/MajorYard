@@ -32,6 +32,6 @@ public class UserRequestDto extends BaseEntity {
     @NoArgsConstructor
     public static class DepartmentDto {
         private Long departmentId;
-        private String name;
+        private String departmentName;
     }
 }
