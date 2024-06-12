@@ -111,6 +111,20 @@ public class PostServiceImpl{
 
     }
 
+    // 유저 PK별 Sort 이용한 페이징
+    @Transactional(readOnly = true)
+    public Page<PostPagingResponseDto> findAllPostsByUserPK(Long userNo, int page, int size, String sortStr) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortStr), "id");
+        Pageable pageable = PageRequest.of(page-1, size, sort);
+
+        Page<Post> postPages = postRepository.findAllByUserId(userNo, pageable);
+
+        Page<PostPagingResponseDto> postDTOPages = postPages.map(postPage -> new PostPagingResponseDto(postPage,s3Service.getFullPath(postPage.getPostImgs())));
+        return postDTOPages;
+
+    }
+
     // 게시글 상세페이지 조회
     @Transactional(readOnly = true)
     public PostReadResponseDto findPostById(Long id){
