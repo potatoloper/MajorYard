@@ -1,6 +1,7 @@
 package com.KAU.majorYard.entity;
 
 import com.KAU.majorYard.entity.majorYard_enum.Follw;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,25 @@ public class Follow {
     @ManyToOne
     @JoinColumn(name = "user_no")
     private User user;
+
+
+    // 양방향 맵핑
+    @JsonIgnore // 무한 참조를 방지
+    @ManyToOne(fetch = FetchType.LAZY) // 성능 최적화를 위함.
+    @JoinColumn(name = "follower_id")
+    private User follower;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "following_id")
+    private User following;
+
+    @Builder
+    public Follow(Long id, User follower, User following) {
+        this.id = id;
+        this.follower = follower;
+        this.following = following;
+    }
 
 
 }
