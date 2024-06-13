@@ -5,7 +5,6 @@ import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
-import com.KAU.majorYard.dto.response.ScrabResponseDto;
 import com.KAU.majorYard.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -527,15 +526,10 @@ public class PostController {
         }
     }
 
-//    @ResponseBody
-//    @GetMapping("/list/{postId}/images/{fileName}")
-//    public Resource showImage(@PathVariable Long postId, @PathVariable Long imgId, @PathVariable String fileName) throws MalformedURLException {
-//        return new UrlResource(s3Service.getFullPath(fileName));
-//    }
 
-//    // 이미지 전체 다운로드
-//    @GetMapping("/list/{postId}/images/download")
-//    public List<ResponseEntity<UrlResource>> downloadImage(@PathVariable Long postId){
-//        return s3Service.downloadImg(postId);
+    // 이미지 전체 다운로드
+//    @GetMapping("/list/{postNo}/images/download")
+//    public List<ResponseEntity<UrlResource>> downloadImage(@PathVariable Long postNo){
+//        return s3Service.downloadImg(postNo);
 //    }
 }
