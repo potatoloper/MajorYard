@@ -1,7 +1,5 @@
 package com.KAU.majorYard.service;
 
-
-
 import com.KAU.majorYard.dto.request.ChatMessageRequestDto;
 import com.KAU.majorYard.dto.response.ChatMessageResponseDto;
 import com.KAU.majorYard.entity.ChatMessage;
@@ -26,10 +24,9 @@ public class ChatMessageService {
         return chatMessageRepository.save(chatMessage);
     }
 
-    public List<ChatMessage> findByChatRoomId(Long chatRoomId) {
-        return chatMessageRepository.findByChatRoomId(chatRoomId);
+    public List<ChatMessage> findByChatRoomIdAndUserId(Long chatRoomId, Long userId) {
+        return chatMessageRepository.findByChatRoomIdAndUserId(chatRoomId, userId);
     }
-
 
     @Transactional
     public ChatMessage createAndSaveMessage(Long roomId, ChatMessageRequestDto requestDto) {
@@ -47,14 +44,17 @@ public class ChatMessageService {
         return chatMessageRepository.save(chatMessage);
     }
 
-    public List<ChatMessageResponseDto> getMessages(Long roomId) {
-        List<ChatMessage> messages = chatMessageRepository.findByChatRoomId(roomId);
+    @Transactional(readOnly = true)
+    public List<ChatMessageResponseDto> getMessages(Long roomId, Long userId) {
+        List<ChatMessage> messages = chatMessageRepository.findByChatRoomIdAndUserId(roomId, userId);
         return messages.stream()
-                .map(msg -> new ChatMessageResponseDto(
-                        msg.getId(),
-                        msg.getSenderName(),
-                        msg.getText(),
-                        msg.getCreatedTime()))
+                .map(message -> ChatMessageResponseDto.builder()
+                        .id(message.getId())
+                        .senderName(message.getSenderName())
+                        .text(message.getText())
+                        .createdTime(message.getCreatedTime())
+                        .userId(message.getUser().getId())
+                        .build())
                 .collect(Collectors.toList());
     }
 }
