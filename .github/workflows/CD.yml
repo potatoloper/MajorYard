@@ -62,7 +62,7 @@ jobs:
           aws deploy create-deployment \
           --application-name MajorYard-CodeDeploy-Project \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name MajorYard-Deploy-Group \
+          --deployment-group-name cicd \
           --file-exists-behavior OVERWRITE \
           --s3-location bucket=majoryardbucket,bundleType=zip,key=MajorYard/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
