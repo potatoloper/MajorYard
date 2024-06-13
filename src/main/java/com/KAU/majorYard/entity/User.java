@@ -61,11 +61,6 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private UserAvailable userAvailable; // yes, no
 
-//    private String follower;
-//
-//    private String follow;
-
-
     // User:Scarb = 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Scrab> userScrabs = new ArrayList<>();
@@ -98,22 +93,21 @@ public class User extends BaseEntity {
         this.role = Role.ROLE_USER;
     }
 
+    // User : Follow = 1:N
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followers = new ArrayList<>();
 
-//    public void addUserTofollowing(Follow follow) {
-//    }
-//
-//    public void addUserrTofollower(Follow follow) {
-//    }
-//
-//    public void removeUserTofollower(Follow follow) {
-//    }
-//
-//    public void removeUserTofollowing(Follow follow) {
-//    }
-//
-//    public Collection<Object> getFollowers() {
-//    }
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followings = new ArrayList<>();
 
+    // 접근자 메서드
+    public List<Follow> getFollowers() {
+        return followers;
+    }
+
+    public List<Follow> getFollowings() {
+        return followings;
+    }
 
 
 

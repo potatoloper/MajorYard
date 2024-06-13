@@ -26,7 +26,8 @@ public enum CustomErrorCode {
 
     NOT_EXISTS_FOLLOWER(HttpStatus.BAD_REQUEST, 4005, "팔로워가 존재하지 않습니다."),
     NOT_EXISTS_FOLLOWING(HttpStatus.BAD_REQUEST, 4006, "팔로잉이 존재하지 않습니다."),
-    SELF_FOLLOW(HttpStatus.BAD_REQUEST, 4007, "자신을 팔로우 할 수 없습니다.");
+    SELF_FOLLOW(HttpStatus.BAD_REQUEST, 4007, "자신을 팔로잉 할 수 없습니다."),
+    ALREADY_FOLLOW(HttpStatus.BAD_REQUEST, 4008,"이미 팔로잉한 사용자입니다." );
 
     private final HttpStatus httpStatus;
     private final int code;
