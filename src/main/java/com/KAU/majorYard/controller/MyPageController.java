@@ -4,14 +4,14 @@ import com.KAU.majorYard.dto.CommonResponse;
 import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.ScrabResponseDto;
+import com.KAU.majorYard.entity.Img;
 import com.KAU.majorYard.service.PostServiceImpl;
+import com.KAU.majorYard.service.S3Service;
 import com.KAU.majorYard.service.ScrabService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class MyPageController {
 
     private final ScrabService scrabService;
     private final PostServiceImpl postService;
+    private final S3Service s3Service;
 
     // 유저의 게시글 스크랩 리스트 조회
     @GetMapping("mypage/{userNo}/scrablist")
@@ -59,4 +60,62 @@ public class MyPageController {
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+    // 프로필 이미지 업로드
+    @PutMapping("mypage/{userNo}/profimg")
+    public CommonResponse setProfileImg(@PathVariable Long userNo, @RequestPart(value = "img") MultipartFile multipartFile){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            String response = s3Service.putProfImage(userNo, multipartFile);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, response);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    // 프로필 이미지 주소 조회
+    @GetMapping("mypage/{userNo}/profimg")
+    public CommonResponse getProfileImg(@PathVariable Long userNo, @RequestPart(value = "img") MultipartFile multipartFile){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            String response = s3Service.getProfImage(userNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg, response);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
+    // 프로필 이미지 삭제
+    @DeleteMapping("mypage/{userNo}/profimg")
+    public CommonResponse deleteProfileImg(@PathVariable Long userNo){
+        String resultMsg;
+        String resultCode;
+
+        try {
+            s3Service.deleteProfImage(userNo);
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        }catch (Exception e){
+            resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+        }
+    }
+
 }
