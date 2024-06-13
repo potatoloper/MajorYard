@@ -8,6 +8,7 @@ import com.KAU.majorYard.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,7 +41,23 @@ public class ChatRoomService {
                 .build();
         return chatRoomRepository.save(chatRoom);
     }
+
+    @Transactional
+    public void deleteChatRoom(Long roomId, Long userId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Chat room not found"));
+
+        if (!chatRoom.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You are not authorized to delete this chat room");
+        }
+
+        chatRoomRepository.deleteById(roomId);
+    }
+
+
 }
+
+
 
 
 

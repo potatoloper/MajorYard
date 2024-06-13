@@ -74,9 +74,16 @@ public class ChatRoomController {
         }
         return ResponseEntity.ok(messages);
     }
+
+
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<String> deleteChatRoom(@PathVariable Long roomId, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        chatRoomService.deleteChatRoom(roomId, userId);
+        return ResponseEntity.ok("Chat room deleted successfully.");
+    }
+
 }
-
-
 
 //    @PostMapping("/{roomId}/messages")
 //    public ResponseEntity<?> saveChatMessage(@PathVariable Long roomId, @RequestBody ChatMessageRequestDto requestDto) {
