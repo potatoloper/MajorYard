@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -109,6 +108,11 @@ public class User extends BaseEntity {
         return followings;
     }
 
-
+    public void updateProfImg(String storedFileName){
+        this.userProfImg = storedFileName;
+    }
+    public void deleteProfImg(){
+        this.userProfImg = null;
+    }
 
 }
