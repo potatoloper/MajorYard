@@ -1,5 +1,5 @@
-insert into Department (department_no,departmentName,majorCategory) values (1, 'software', 'ENGINEERING');
-insert into Department (department_no,departmentName,majorCategory) values (2, 'visual design', 'ART');
+insert into Department (department_no,departmentName,majorCategory) values (1, '소프트웨어학과', 'ENGINEERING');
+insert into Department (department_no,departmentName,majorCategory) values (2, '시각디자인학과', 'ART');
 
 
 
