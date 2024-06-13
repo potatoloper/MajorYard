@@ -7,17 +7,15 @@ import com.KAU.majorYard.exception.CustomException;
 import com.KAU.majorYard.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/register")
     public @ResponseBody String register(@RequestBody UserRequestDto credentials) {
@@ -31,12 +29,14 @@ public class UserController {
             throw new ResponseStatusException(e.getCustomErrorCode().getHttpStatus(), e.getMessage());
         }
     }
+
     @PostMapping("/login")
     public @ResponseBody UserResponseDto login(@RequestBody UserRequestDto credentials, HttpServletRequest request) {
         try {
             UserResponseDto userResponseDto = userService.login(credentials.getLoginId(), credentials.getPassword());
             HttpSession session = request.getSession(true); // 세션 생성
-            session.setAttribute("user", userResponseDto); // 세션에 사용자 정보 저장
+            session.setAttribute("userId", userResponseDto.getId()); // 세션에 사용자 ID 저장
+            session.setAttribute("userLoginId", userResponseDto.getLoginId()); // 세션에 사용자 Login ID 저장
             return userResponseDto;
         } catch (CustomException e) {
             throw new ResponseStatusException(e.getCustomErrorCode().getHttpStatus(), e.getMessage());
@@ -51,6 +51,4 @@ public class UserController {
         }
         return "Logout successful";
     }
-
-
 }

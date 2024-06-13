@@ -38,8 +38,7 @@ public class Follow {
     private User following;
 
     @Builder
-    public Follow(Long id, User follower, User following) {
-        this.id = id;
+    public Follow(User follower, User following) {
         this.follower = follower;
         this.following = following;
     }

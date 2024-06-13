@@ -4,12 +4,12 @@ import com.KAU.majorYard.dto.request.UserRequestDto;
 import com.KAU.majorYard.dto.response.UserResponseDto;
 import com.KAU.majorYard.entity.Department;
 import com.KAU.majorYard.entity.User;
-import com.KAU.majorYard.entity.majorYard_enum.Gender;
-import com.KAU.majorYard.entity.majorYard_enum.Role;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
 import com.KAU.majorYard.repository.DepartmentRepository;
 import com.KAU.majorYard.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +58,27 @@ public class UserService {
         throw new CustomException(CustomErrorCode.USER_NOT_FOUND); // 로그인 실패
     }
 
-    public void logout(){
+    public void logout() {
         System.out.println("로그아웃 되었습니다.");
+    }
+
+    public User getUserFromRequest(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("userId");
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+    }
+
+
+    private Long extractUserIdFromRequest(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            throw new CustomException(CustomErrorCode.USER_NOT_FOUND);
+        }
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            throw new CustomException(CustomErrorCode.USER_NOT_FOUND);
+        }
+        return userId;
     }
 }
