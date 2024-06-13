@@ -10,4 +10,6 @@ import lombok.Setter;
 public class ChatRoomRequestDto {
     private Long id;
     private String roomName;
+
+    private Long userId; //userId로 구분
 }

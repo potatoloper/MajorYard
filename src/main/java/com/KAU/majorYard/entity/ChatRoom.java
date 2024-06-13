@@ -10,8 +10,8 @@ import java.util.List;
 
 @Table(name = "ChatRoom")
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatRoom{
@@ -27,6 +27,10 @@ public class ChatRoom{
     // ChatRoom:ChatMessage = 1:N
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> chatMessages = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_no")
+    private User user;
 
 
 }
