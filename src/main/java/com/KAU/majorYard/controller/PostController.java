@@ -283,6 +283,11 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
+        }catch (IllegalAccessException e){
+            resultCode = CommonRestResult.CommonRestResultEnum.LIKE_DUPLICATE.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.LIKE_DUPLICATE.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
         }catch (Exception e){
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
@@ -322,7 +327,12 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (IllegalAccessException e){
+            resultCode = CommonRestResult.CommonRestResultEnum.SCRAB_DUPLICATE.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SCRAB_DUPLICATE.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
+        } catch (Exception e){
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
