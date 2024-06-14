@@ -72,4 +72,10 @@ public class FollowService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
     }
+
+    // 팔로잉 리스트 가져오기
+    public List<User> getFollowings(Long userId) {
+        List<Follow> followings = followRepository.findByFollowerId(userId);
+        return followings.stream().map(Follow::getFollowing).collect(Collectors.toList());
+    }
 }
