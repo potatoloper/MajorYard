@@ -546,11 +546,10 @@ public class PostController {
 //    }
 
 
-
     @GetMapping("/followings")
-    public ResponseEntity<Page<PostPagingResponseDto>> getPostsOfFollowings(@RequestParam int page, @RequestParam int size, @RequestParam String sort, HttpServletRequest request) {
+    public ResponseEntity<List<PostReadResponseDto>> getPostsOfFollowings(HttpServletRequest request) {
         Long userId = (Long) request.getSession().getAttribute("userId");
-        Page<PostPagingResponseDto> posts = postService.findAllPostsOfFollowings(userId, page, size, sort);
+        List<PostReadResponseDto> posts = postService.findAllPostsOfFollowings(userId);
         return ResponseEntity.ok(posts);
     }
 }

@@ -18,7 +18,7 @@ public enum CustomErrorCode {
 
 
     // 4000 : Conflict
-    DUPLICATE_USER(HttpStatus.CONFLICT, 4001, "이미 등록된 회원입니다."),
+    DUPLICATE_USER(HttpStatus.CONFLICT, 1029, "이미 등록된 회원입니다."),
     INVALID_BOARD_TYPE(HttpStatus.CONFLICT, 4002, "잘못된 게시판 유형입니다."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, 4003, "입력한 비밀번호가 일치하지 않습니다."),
     INVALID_DEPARTMENT_ID(HttpStatus.BAD_REQUEST, 4004, "유효하지 않은 학과 ID 입니다."),

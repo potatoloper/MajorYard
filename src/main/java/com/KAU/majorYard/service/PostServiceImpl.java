@@ -36,7 +36,6 @@ public class PostServiceImpl{
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
     private final S3Service s3Service;
-
     private final FollowService followService;
 
 
@@ -198,17 +197,19 @@ public class PostServiceImpl{
     }
 
 
+
+
+
+
     @Transactional(readOnly = true)
-    public Page<PostPagingResponseDto> findAllPostsOfFollowings(Long userId, int page, int size, String sortStr) {
+    public List<PostReadResponseDto> findAllPostsOfFollowings(Long userId) {
         List<User> followings = followService.getFollowings(userId);
         List<Long> followingIds = followings.stream().map(User::getId).collect(Collectors.toList());
 
-        Sort sort = Sort.by(Sort.Direction.fromString(sortStr), "id");
-        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        List<Post> posts = postRepository.findByUserIdIn(followingIds);
 
-        Page<Post> postPages = postRepository.findByUserIdIn(followingIds, pageable);
-
-        return postPages.map(postPage -> new PostPagingResponseDto(postPage, s3Service.getFullPath(postPage.getPostImgs())));
+        return posts.stream()
+                .map(post -> new PostReadResponseDto(post, s3Service.getFullPath(post.getPostImgs())))
+                .collect(Collectors.toList());
     }
-
 }
