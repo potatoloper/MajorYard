@@ -30,8 +30,14 @@ public class UserService {
             throw new CustomException(CustomErrorCode.DUPLICATE_USER);
         }
 
+        if (userRepository.existsByNickName(credentials.getNickName())) {
+            throw new CustomException(CustomErrorCode.DUPLICATE_NICKNAME);
+        }
+
+
         Department department = departmentRepository.findById(credentials.getDepartment().getDepartmentId())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.INVALID_DEPARTMENT_ID));
+
 
         User newUser = User.builder()
                 .loginId(credentials.getLoginId())
