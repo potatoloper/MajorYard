@@ -1,5 +1,6 @@
 package com.KAU.majorYard.controller;
 
+import com.KAU.majorYard.dto.request.ChatMessageRequestDto;
 import com.KAU.majorYard.dto.request.ChatRoomRequestDto;
 import com.KAU.majorYard.dto.response.ChatMessageResponseDto;
 import com.KAU.majorYard.dto.response.ChatRoomResponseDto;
@@ -65,16 +66,18 @@ public class ChatRoomController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/{roomId}/messages")
-    public ResponseEntity<List<ChatMessageResponseDto>> getMessages(@PathVariable Long roomId, HttpServletRequest request) {
-        User user = userService.getUserFromRequest(request);
-        List<ChatMessageResponseDto> messages = chatMessageService.getMessages(roomId, user.getId());
-        if (messages.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+    @GetMapping("/{chatRoomId}/messages")
+    public ResponseEntity<List<ChatMessageResponseDto>> getMessagesByChatRoom(@PathVariable Long chatRoomId) {
+        List<ChatMessageResponseDto> messages = chatRoomService.getMessagesByChatRoom(chatRoomId);
         return ResponseEntity.ok(messages);
     }
 
+    @PostMapping("/{chatRoomId}/messages")
+    public ResponseEntity<ChatMessageResponseDto> sendMessage(@PathVariable Long chatRoomId,
+                                                              @RequestBody ChatMessageRequestDto requestDto) {
+        ChatMessageResponseDto message = chatMessageService.sendMessage(chatRoomId, requestDto);
+        return ResponseEntity.ok(message);
+    }
 
     @DeleteMapping("/{roomId}")
     public ResponseEntity<String> deleteChatRoom(@PathVariable Long roomId, HttpServletRequest request) {
@@ -84,6 +87,8 @@ public class ChatRoomController {
     }
 
 }
+
+/*****************************************************************************************************************************************************/
 
 //    @PostMapping("/{roomId}/messages")
 //    public ResponseEntity<?> saveChatMessage(@PathVariable Long roomId, @RequestBody ChatMessageRequestDto requestDto) {
@@ -119,7 +124,7 @@ public class ChatRoomController {
 //        model.addAttribute("roomName", chatRoom.getRoomName());
 //        return "chat-room";
 //    }
-//
-//}
+/*****************************************************************************************************************************************************/
+
 
 

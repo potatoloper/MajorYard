@@ -20,6 +20,9 @@ public class ChatMessage extends BaseEntity{
     @Column(name="chat_message_no")
     private Long id;
 
+    @Column(name = "sender_id")
+    private Long senderId;
+
     @Column(name = "sender")
     private String senderName;
 

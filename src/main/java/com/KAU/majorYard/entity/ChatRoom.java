@@ -20,6 +20,9 @@ public class ChatRoom{
     @Column(name = "chat_room_no")
     private Long id;
 
+    @Column(name = "sender_id")
+    private Long senderId;
+
     @Column(name = "roomName")
     private String roomName;
 
