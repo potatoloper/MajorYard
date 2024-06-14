@@ -18,16 +18,18 @@ public enum CustomErrorCode {
 
 
     // 4000 : Conflict
-    DUPLICATE_USER(HttpStatus.CONFLICT, 4001, "이미 등록된 회원입니다."),
+    DUPLICATE_USER(HttpStatus.CONFLICT, 1029, "이미 등록된 회원입니다."),
     INVALID_BOARD_TYPE(HttpStatus.CONFLICT, 4002, "잘못된 게시판 유형입니다."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, 4003, "입력한 비밀번호가 일치하지 않습니다."),
     INVALID_DEPARTMENT_ID(HttpStatus.BAD_REQUEST, 4004, "유효하지 않은 학과 ID 입니다."),
+    DUPLICATE_NICKNAME(HttpStatus.CONFLICT, 4004, "이미 사용 중인 닉네임입니다."),
 
 
     NOT_EXISTS_FOLLOWER(HttpStatus.BAD_REQUEST, 4005, "팔로워가 존재하지 않습니다."),
     NOT_EXISTS_FOLLOWING(HttpStatus.BAD_REQUEST, 4006, "팔로잉이 존재하지 않습니다."),
     SELF_FOLLOW(HttpStatus.BAD_REQUEST, 4007, "자신을 팔로잉 할 수 없습니다."),
     ALREADY_FOLLOW(HttpStatus.BAD_REQUEST, 4008,"이미 팔로잉한 사용자입니다." );
+
 
     private final HttpStatus httpStatus;
     private final int code;

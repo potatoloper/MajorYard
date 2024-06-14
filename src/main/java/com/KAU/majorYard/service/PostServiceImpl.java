@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +36,7 @@ public class PostServiceImpl{
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
     private final S3Service s3Service;
+    private final FollowService followService;
 
 
     @Transactional
@@ -194,4 +196,20 @@ public class PostServiceImpl{
         postRepository.deleteById(id);
     }
 
+
+
+
+
+
+    @Transactional(readOnly = true)
+    public List<PostReadResponseDto> findAllPostsOfFollowings(Long userId) {
+        List<User> followings = followService.getFollowings(userId);
+        List<Long> followingIds = followings.stream().map(User::getId).collect(Collectors.toList());
+
+        List<Post> posts = postRepository.findByUserIdIn(followingIds);
+
+        return posts.stream()
+                .map(post -> new PostReadResponseDto(post, s3Service.getFullPath(post.getPostImgs())))
+                .collect(Collectors.toList());
+    }
 }

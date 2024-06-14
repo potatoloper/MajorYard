@@ -24,4 +24,7 @@ public interface PostService {
     void pmtUpdateAnsweredPost(Long id);
 
     void deletePosts(Long id);
+
+    // 팔로우한 유저들의 게시물 목록을 불러오는 메소드 추가
+    List<PostReadResponseDto> findAllPostsOfFollowings(Long userId);
 }
