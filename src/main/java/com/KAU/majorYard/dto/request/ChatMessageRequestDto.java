@@ -1,22 +1,17 @@
 package com.KAU.majorYard.dto.request;
 
+import com.KAU.majorYard.entity.User;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter @Setter
+@Builder
 public class ChatMessageRequestDto {
-    private String senderName;
+    private Long userId;
+
+    private User user;
     private String text;
 
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;  // 세터 추가
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;  // 세터 추가
-    }
 }

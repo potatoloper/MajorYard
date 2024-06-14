@@ -1,5 +1,6 @@
 package com.KAU.majorYard.service;
 
+import com.KAU.majorYard.dto.request.UserProfileUpdateRequest;
 import com.KAU.majorYard.dto.request.UserRequestDto;
 import com.KAU.majorYard.dto.response.UserResponseDto;
 import com.KAU.majorYard.entity.Department;
@@ -12,6 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class UserService {
@@ -20,6 +25,8 @@ public class UserService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+    @Autowired
+    private S3Service s3Service;
 
     public boolean register(UserRequestDto credentials) {
         if (!credentials.getPassword().equals(credentials.getCheckedPassword())) {
@@ -86,5 +93,15 @@ public class UserService {
             throw new CustomException(CustomErrorCode.USER_NOT_FOUND);
         }
         return userId;
+    }
+
+    @Transactional
+    public void updateUserProfile(Long userNo, UserProfileUpdateRequest request, MultipartFile multipartFile) throws IOException {
+        User user = userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+        user.updateProfile(request.getLoginId(), request.getUserPhone(), request.getNickName());
+
+        if (multipartFile != null){
+            s3Service.putProfImage(userNo, multipartFile);
+        }
     }
 }

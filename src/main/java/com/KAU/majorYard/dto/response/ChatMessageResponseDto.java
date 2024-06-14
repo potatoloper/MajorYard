@@ -1,5 +1,6 @@
 package com.KAU.majorYard.dto.response;
 
+import com.KAU.majorYard.entity.ChatMessage;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,18 +8,31 @@ import java.sql.Timestamp;
 
 @Getter
 public class ChatMessageResponseDto {
-    private final Long id;
-    private final String senderName;
-    private final String text;
-    private final Timestamp createdTime;
-    private final Long userId;
+    private Long id;
+    private Long senderId;
+    private String senderName;
+    private String text;
+    private Timestamp createdTime;
+    private Long chatRoomId;
 
     @Builder
-    public ChatMessageResponseDto(Long id, String senderName, String text, Timestamp createdTime, Long userId) {
+    public ChatMessageResponseDto(Long id, Long senderId, String senderName, String text, Timestamp createdTime, Long chatRoomId) {
         this.id = id;
+        this.senderId = senderId;
         this.senderName = senderName;
         this.text = text;
         this.createdTime = createdTime;
-        this.userId = userId;
+        this.chatRoomId = chatRoomId;
+    }
+
+    public static ChatMessageResponseDto from(ChatMessage chatMessage, String senderName) {
+        return ChatMessageResponseDto.builder()
+                .id(chatMessage.getId())
+                .senderId(chatMessage.getSenderId())
+                .senderName(senderName)
+                .text(chatMessage.getText())
+                .createdTime(chatMessage.getCreatedTime())
+                .chatRoomId(chatMessage.getChatRoom().getId())
+                .build();
     }
 }
