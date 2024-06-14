@@ -114,5 +114,16 @@ public class User extends BaseEntity {
     public void deleteProfImg(){
         this.userProfImg = null;
     }
+    public void updateProfile(String loginId, String userPhone, String nickName){
+        if (loginId != null){
+            this.loginId = loginId;
+        }
+        if (userPhone != null){
+            this.userPhone = userPhone;
+        }
+        if (nickName != null){
+            this.nickName = nickName;
+        }
+    }
 
 }
