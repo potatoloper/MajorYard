@@ -6,9 +6,11 @@ import com.KAU.majorYard.dto.request.*;
 import com.KAU.majorYard.dto.response.PostPagingResponseDto;
 import com.KAU.majorYard.dto.response.PostReadResponseDto;
 import com.KAU.majorYard.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -542,4 +544,13 @@ public class PostController {
 //    public List<ResponseEntity<UrlResource>> downloadImage(@PathVariable Long postNo){
 //        return s3Service.downloadImg(postNo);
 //    }
+
+
+
+    @GetMapping("/followings")
+    public ResponseEntity<Page<PostPagingResponseDto>> getPostsOfFollowings(@RequestParam int page, @RequestParam int size, @RequestParam String sort, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        Page<PostPagingResponseDto> posts = postService.findAllPostsOfFollowings(userId, page, size, sort);
+        return ResponseEntity.ok(posts);
+    }
 }

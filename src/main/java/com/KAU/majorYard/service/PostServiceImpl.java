@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +36,8 @@ public class PostServiceImpl{
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
     private final S3Service s3Service;
+
+    private final FollowService followService;
 
 
     @Transactional
@@ -192,6 +195,20 @@ public class PostServiceImpl{
         }
 
         postRepository.deleteById(id);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<PostPagingResponseDto> findAllPostsOfFollowings(Long userId, int page, int size, String sortStr) {
+        List<User> followings = followService.getFollowings(userId);
+        List<Long> followingIds = followings.stream().map(User::getId).collect(Collectors.toList());
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortStr), "id");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+
+        Page<Post> postPages = postRepository.findByUserIdIn(followingIds, pageable);
+
+        return postPages.map(postPage -> new PostPagingResponseDto(postPage, s3Service.getFullPath(postPage.getPostImgs())));
     }
 
 }
