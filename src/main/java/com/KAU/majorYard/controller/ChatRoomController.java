@@ -51,6 +51,9 @@ public class ChatRoomController {
         return ResponseEntity.ok(responseDto);
     }
 
+
+
+    //
     @GetMapping("/{roomId}")
     public ResponseEntity<ChatRoomResponseDto> roomPage(@PathVariable Long roomId, HttpServletRequest request) {
         User user = userService.getUserFromRequest(request);
