@@ -41,18 +41,19 @@ public class ChatRoomController {
         return ResponseEntity.ok().body(chatRoomResponseDtos);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<ChatRoomResponseDto> createChatRoom(@RequestBody ChatRoomRequestDto requestDto, HttpServletRequest request) {
-        User user = userService.getUserFromRequest(request);
+    @PostMapping("/{userId}/create")
+    public ResponseEntity<ChatRoomResponseDto> createChatRoom(@PathVariable Long userId, @RequestBody ChatRoomRequestDto requestDto) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         ChatRoom chatRoom = chatRoomService.createChatRoom(requestDto, user);
         ChatRoomResponseDto responseDto = ChatRoomResponseDto.builder()
                 .id(chatRoom.getId())
                 .roomName(chatRoom.getRoomName())
                 .userId(chatRoom.getUser().getId())
-                .senderId(chatRoom.getSenderId())
                 .build();
         return ResponseEntity.ok(responseDto);
     }
+
 
 
 
