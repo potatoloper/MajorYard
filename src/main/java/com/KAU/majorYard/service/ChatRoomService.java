@@ -29,12 +29,12 @@ public class  ChatRoomService {
         return chatRoomRepository.save(chatRoom);
     }
 
-    public ChatRoom findById(Long id) {
-        return chatRoomRepository.findById(id).orElse(null);
+    public Optional <ChatRoom> findById(Long id) {
+        return chatRoomRepository.findById(id);
     }
 
-    public List<ChatRoom> findAllByUser(User user) {
-        return chatRoomRepository.findAllByUser(user);
+    public List<ChatRoom> findAllByUserIdOrSenderId(Long user_id, Long sender_id) {
+        return chatRoomRepository.findAllByUserIdOrSenderId(user_id, sender_id);
     }
 
     public Optional<ChatRoom> findByIdAndUser(Long id, User user) {

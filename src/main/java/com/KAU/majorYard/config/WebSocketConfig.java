@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //web socket server 경로 지정
-        registry.addEndpoint("/endpoint").setAllowedOrigins("http://54.180.150.195:8080");
+        registry.addEndpoint("/endpoint").setAllowedOrigins("*");
     }
 
 }
