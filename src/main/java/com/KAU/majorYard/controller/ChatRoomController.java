@@ -25,9 +25,11 @@ public class ChatRoomController {
     private final ChatMessageService chatMessageService;
     private final UserService userService;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<ChatRoomResponseDto>> chatRoomList(HttpServletRequest request) {
-        User user = userService.getUserFromRequest(request);
+    // TODO: /chat/{userId}/list
+    @GetMapping("/{userId}/list")
+    public ResponseEntity<List<ChatRoomResponseDto>> chatRoomListByUser(@PathVariable Long userId) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         List<ChatRoom> chatRooms = chatRoomService.findAllByUser(user);
         List<ChatRoomResponseDto> chatRoomResponseDtos = chatRooms.stream()
                 .map(room -> ChatRoomResponseDto.builder()
@@ -38,7 +40,6 @@ public class ChatRoomController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(chatRoomResponseDtos);
     }
-
     @PostMapping("/create")
     public ResponseEntity<ChatRoomResponseDto> createChatRoom(@RequestBody ChatRoomRequestDto requestDto, HttpServletRequest request) {
         User user = userService.getUserFromRequest(request);
@@ -53,14 +54,12 @@ public class ChatRoomController {
 
 
 
-    //
-    @GetMapping("/{roomId}")
-    public ResponseEntity<ChatRoomResponseDto> roomPage(@PathVariable Long roomId, HttpServletRequest request) {
-        User user = userService.getUserFromRequest(request);
-        ChatRoom chatRoom = chatRoomService.findByIdAndUser(roomId, user);
-        if (chatRoom == null) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/{userId}/{roomId}")
+    public ResponseEntity<ChatRoomResponseDto> roomPage(@PathVariable Long userId, @PathVariable Long roomId) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        ChatRoom chatRoom = chatRoomService.findByIdAndUser(roomId, user)
+                .orElseThrow(() -> new RuntimeException("Chat room not found"));
         ChatRoomResponseDto responseDto = ChatRoomResponseDto.builder()
                 .id(roomId)
                 .roomName(chatRoom.getRoomName())

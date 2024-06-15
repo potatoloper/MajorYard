@@ -14,12 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ChatRoomService {
+public class  ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
@@ -36,10 +37,9 @@ public class ChatRoomService {
         return chatRoomRepository.findAllByUser(user);
     }
 
-    public ChatRoom findByIdAndUser(Long id, User user) {
-        return chatRoomRepository.findByIdAndUser(id, user).orElse(null);
+    public Optional<ChatRoom> findByIdAndUser(Long id, User user) {
+        return chatRoomRepository.findByIdAndUser(id, user);
     }
-
     public ChatRoom createChatRoom(ChatRoomRequestDto requestDto, User user) {
         ChatRoom chatRoom = ChatRoom.builder()
                 .roomName(requestDto.getRoomName())

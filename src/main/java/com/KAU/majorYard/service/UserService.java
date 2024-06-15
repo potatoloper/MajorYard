@@ -3,10 +3,12 @@ package com.KAU.majorYard.service;
 import com.KAU.majorYard.dto.request.UserProfileUpdateRequest;
 import com.KAU.majorYard.dto.request.UserRequestDto;
 import com.KAU.majorYard.dto.response.UserResponseDto;
+import com.KAU.majorYard.entity.ChatRoom;
 import com.KAU.majorYard.entity.Department;
 import com.KAU.majorYard.entity.User;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
+import com.KAU.majorYard.repository.ChatRoomRepository;
 import com.KAU.majorYard.repository.DepartmentRepository;
 import com.KAU.majorYard.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,8 +28,17 @@ public class UserService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+
+    private ChatRoomRepository chatRoomRepository;
     @Autowired
     private S3Service s3Service;
+
+
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
 
     public boolean register(UserRequestDto credentials) {
         if (!credentials.getPassword().equals(credentials.getCheckedPassword())) {
