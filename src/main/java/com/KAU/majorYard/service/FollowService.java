@@ -1,12 +1,13 @@
 package com.KAU.majorYard.service;
 
-import com.KAU.majorYard.dto.response.FollowResponseDto;
+import com.KAU.majorYard.dto.response.UserDetailDto;
 import com.KAU.majorYard.entity.Follow;
 import com.KAU.majorYard.entity.User;
 import com.KAU.majorYard.exception.CustomErrorCode;
 import com.KAU.majorYard.exception.CustomException;
 import com.KAU.majorYard.repository.FollowRepository;
 import com.KAU.majorYard.repository.UserRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Service @Getter
 @RequiredArgsConstructor
 public class FollowService {
     private final FollowRepository followRepository;
@@ -52,22 +53,27 @@ public class FollowService {
         return new ResponseEntity<>(follower.getNickName() + "님이 " + following.getNickName() + "님의 팔로우를 취소하였습니다.", HttpStatus.OK);
     }
 
-    @Transactional(readOnly = true)
-    public List<String> getFollowers(Long userId) {
-        List<Follow> followers = followRepository.findByFollowingId(userId);
-        return followers.stream()
-                .map(follow -> follow.getFollower().getNickName())
+    public List<UserDetailDto> getFollowers(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+        return user.getFollowers().stream()
+                .map(follow -> UserDetailDto.builder()
+                        .userId(follow.getFollower().getId())
+                        .nickname(follow.getFollower().getNickName())
+                        .build())
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<String> getFollowing(Long userId) {
-        List<Follow> followings = followRepository.findByFollowerId(userId);
-        return followings.stream()
-                .map(follow -> follow.getFollowing().getNickName())
+    public List<UserDetailDto> getFollowing(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+        return user.getFollowings().stream()
+                .map(follow -> UserDetailDto.builder()
+                        .userId(follow.getFollowing().getId())
+                        .nickname(follow.getFollowing().getNickName())
+                        .build())
                 .collect(Collectors.toList());
     }
-
     private User findUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));

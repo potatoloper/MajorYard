@@ -3,7 +3,7 @@ package com.KAU.majorYard.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
+@Getter @Builder
 public class ChatRoomResponseDto {
     private Long id;
     private String roomName;

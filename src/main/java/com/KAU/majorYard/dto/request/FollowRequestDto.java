@@ -11,4 +11,9 @@ public class FollowRequestDto {
     public void setFollowingId(Long followingId) {
         this.followingId = followingId;
     }
+
+    public Long getUserId(){return userId;}
+
+    public void setUserId(Long userId){this.userId = userId;}
+
 }

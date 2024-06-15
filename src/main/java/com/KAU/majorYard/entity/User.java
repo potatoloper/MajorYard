@@ -108,6 +108,12 @@ public class User extends BaseEntity {
         return followings;
     }
 
+    public String getNickName(){
+        return nickName;
+    }
+
+
+
     public void updateProfImg(String storedFileName){
         this.userProfImg = storedFileName;
     }

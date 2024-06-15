@@ -26,6 +26,7 @@ public class Follow {
     private User user;
 
 
+
     // 양방향 맵핑
     @JsonIgnore // 무한 참조를 방지
     @ManyToOne(fetch = FetchType.LAZY) // 성능 최적화를 위함.
@@ -42,6 +43,7 @@ public class Follow {
         this.follower = follower;
         this.following = following;
     }
+
 
 
 }
