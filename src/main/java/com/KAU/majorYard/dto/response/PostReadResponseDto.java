@@ -40,6 +40,7 @@ public class PostReadResponseDto {
     //시사이슈 게시판 특화
     private String contentUrl;
 
+    private Long userNo;
     private String nickName;
     private String modifiedTime;
     private List<String> imgUrls;
@@ -58,6 +59,7 @@ public class PostReadResponseDto {
         this.studyPartyOf = post.getStudyPartyOf();
         this.studyFee = post.getStudyFee();
         this.studyUntil = post.getStudyUntil();
+        this.userNo = post.getUser().getId();
         this.nickName = post.getUser().getNickName();
         this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.imgUrls = imgUrls;
