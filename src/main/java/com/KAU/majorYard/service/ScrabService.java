@@ -44,10 +44,10 @@ public class ScrabService {
 
     @Transactional
     public void PostScrabDown(Long userNo, Long postNo){
-        User user = userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+        userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Post post = postRepository.findById(postNo).orElseThrow(()-> new CustomException(CustomErrorCode.POST_NOT_FOUND));
 
-        Scrab scrab = scrabRepository.findByUserId(userNo);
+        Scrab scrab = scrabRepository.findByUserIdAndPostId(userNo, postNo);
         scrabRepository.delete(scrab);
         post.decreaseScarbs();
     }
