@@ -44,7 +44,7 @@ public class LikeService {
         User user = userRepository.findById(userNo).orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
         Post post = postRepository.findById(postNo).orElseThrow(()-> new CustomException(CustomErrorCode.POST_NOT_FOUND));
 
-        Like like = likeRepository.findByUserId(userNo);
+        Like like = likeRepository.findByUserIdAndPostId(userNo, postNo);
         likeRepository.delete(like);
         post.decreaseLikes();
     }
