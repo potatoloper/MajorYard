@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class ChatMessageService {
 
     @Transactional
     public ChatMessage createAndSaveMessage(Long roomId, ChatMessageRequestDto requestDto) {
-        ChatRoom chatRoom = chatRoomService.findById(roomId);
+        Optional <ChatRoom>chatRoom = chatRoomService.findById(roomId);
         if (chatRoom == null) {
             throw new EntityNotFoundException("Chat room not found with id: " + roomId);
         }
@@ -47,7 +48,7 @@ public class ChatMessageService {
                 .senderId(requestDto.getUserId())
                 .senderName(sender.getUserName())
                 .text(requestDto.getText())
-                .chatRoom(chatRoom)
+                .chatRoom(chatRoom.get())
                 .build();
 
         return chatMessageRepository.save(chatMessage);
