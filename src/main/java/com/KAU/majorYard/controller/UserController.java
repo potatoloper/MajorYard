@@ -1,5 +1,7 @@
 package com.KAU.majorYard.controller;
 
+import com.KAU.majorYard.dto.CommonResponse;
+import com.KAU.majorYard.dto.CommonRestResult;
 import com.KAU.majorYard.dto.request.UserRequestDto;
 import com.KAU.majorYard.dto.response.UserResponseDto;
 import com.KAU.majorYard.exception.CustomErrorCode;
@@ -18,14 +20,30 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public @ResponseBody String register(@RequestBody UserRequestDto credentials) {
+    public CommonResponse register(@RequestBody UserRequestDto credentials) {
+        String resultMsg;
+        String resultCode;
+
         try {
             boolean success = userService.register(credentials);
             if (!success) {
                 throw new CustomException(CustomErrorCode.DUPLICATE_USER);
             }
-            return "Registration successful";
+            resultCode = CommonRestResult.CommonRestResultEnum.SINGUP_SUCCESS.getCode();
+            resultMsg = CommonRestResult.CommonRestResultEnum.SINGUP_SUCCESS.getMessage();
+            return new CommonResponse(resultCode, resultMsg);
+
         } catch (CustomException e) {
+            if (e.getCustomErrorCode() == CustomErrorCode.DUPLICATE_USER){
+                resultCode = CommonRestResult.CommonRestResultEnum.LOGIN_ID_DUPLICATE.getCode();
+                resultMsg = CommonRestResult.CommonRestResultEnum.LOGIN_ID_DUPLICATE.getMessage();
+                return new CommonResponse(resultCode, resultMsg);
+            }
+            if (e.getCustomErrorCode() == CustomErrorCode.DUPLICATE_NICKNAME){
+                resultCode = CommonRestResult.CommonRestResultEnum.NICKNAME_DUPLICATE.getCode();
+                resultMsg = CommonRestResult.CommonRestResultEnum.NICKNAME_DUPLICATE.getMessage();
+                return new CommonResponse(resultCode, resultMsg);
+            }
             throw new ResponseStatusException(e.getCustomErrorCode().getHttpStatus(), e.getMessage());
         }
     }
