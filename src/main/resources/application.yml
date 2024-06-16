@@ -25,6 +25,7 @@ spring:
     username: admin
     password: tksgkrghkdlxld
 
+######
 
 # local
 #  datasource:
@@ -34,6 +35,7 @@ spring:
 #    password: 12341234
 
 
+  jpa:
     open-in-view: true
     hibernate:
       ddl-auto: update
