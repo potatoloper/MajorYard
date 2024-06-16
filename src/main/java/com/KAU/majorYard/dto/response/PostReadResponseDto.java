@@ -61,7 +61,7 @@ public class PostReadResponseDto {
         this.studyUntil = post.getStudyUntil();
         this.userNo = post.getUser().getId();
         this.nickName = post.getUser().getNickName();
-        this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.modifiedTime = post.getPostModifiedDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.imgUrls = imgUrls;
         this.contentUrl = post.getUrl();
     }

@@ -56,7 +56,7 @@ public class ScrabResponseDto {
         this.studyFee = post.getStudyFee();
         this.studyUntil = post.getStudyUntil();
         this.nickName = post.getUser().getNickName();
-        this.modifiedTime = post.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.modifiedTime = post.getPostModifiedDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.imgUrls = imgUrls;
         this.contentUrl = post.getUrl();
     }

@@ -11,10 +11,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @Table(name = "Post")
 @Entity
@@ -55,14 +60,14 @@ public class Post extends BaseEntity{
     @Column(columnDefinition = "varchar(1000)")
     private String url;
 
-
 //    @CreatedDate
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    private LocalDateTime postCreatedDt;
 //
 //    @LastModifiedDate
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime postModifiedDt;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime postModifiedDt;
 
 
     // Post:Img = 1:N
@@ -106,6 +111,9 @@ public class Post extends BaseEntity{
         if (postContent != null){
             this.postContent = postContent;
         }
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        this.postModifiedDt = LocalDateTime.now();
     }
 
     public void setPostImagesNull(){
