@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_JAR=$(ls /home/ubuntu/MajorYard/build/libs/majorYard-0.0.1-SNAPSHOT.jar)
+BUILD_JAR=$(ls /home/ubuntu/build/libs/majorYard-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/deploy.log
 
