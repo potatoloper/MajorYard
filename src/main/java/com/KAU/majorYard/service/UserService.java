@@ -88,10 +88,9 @@ public class UserService {
     }
 
     public User getUserFromRequest(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) request.getSession().getAttribute("userId");
         return userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 
 

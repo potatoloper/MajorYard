@@ -19,18 +19,21 @@ public class FollowController {
     private final FollowService followService;
     private final UserService userService;
 
-    @PostMapping("/follow")
-    public ResponseEntity<?> follow(@RequestBody FollowRequestDto followRequestDto, HttpServletRequest httpServletRequest) {
-        User user = userService.getUserFromRequest(httpServletRequest);
+
+
+    @PostMapping("/follow/{userId}")
+    public ResponseEntity<?> follow(@PathVariable Long userId, @RequestBody FollowRequestDto followRequestDto, HttpServletRequest httpServletRequest) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         return followService.followUser(followRequestDto.getFollowingId(), user);
     }
 
-    @PostMapping("/unfollow")
-    public ResponseEntity<?> unfollow(@RequestBody FollowRequestDto followRequestDto, HttpServletRequest httpServletRequest) {
-        User user = userService.getUserFromRequest(httpServletRequest);
+    @PostMapping("/unfollow/{userId}")
+    public ResponseEntity<?> unfollow(@PathVariable Long userId, @RequestBody FollowRequestDto followRequestDto, HttpServletRequest httpServletRequest) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         return followService.unfollowUser(followRequestDto.getFollowingId(), user);
     }
-
 
 
 

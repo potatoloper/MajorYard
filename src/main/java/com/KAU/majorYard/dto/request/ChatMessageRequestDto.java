@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 @Builder
 public class ChatMessageRequestDto {
-    private Long userId;
+    private Long roomId;
 
     private User user;
     private String text;

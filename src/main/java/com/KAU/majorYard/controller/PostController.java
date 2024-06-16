@@ -31,8 +31,8 @@ public class PostController {
     /* 게시글 저장 */
 
     @PostMapping("free/save")
-    public CommonResponse saveFreePost(@RequestPart(value="posting") @Valid BoardRequestDto.freeBoard request,
-                                       @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+    public CommonResponse saveFreePost(@RequestPart(value = "posting") @Valid BoardRequestDto.freeBoard request,
+                                       @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) throws IOException {
         boardService.saveFreePost(request, imgList);
         String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
         String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
@@ -40,8 +40,8 @@ public class PostController {
     }
 
     @PostMapping("promotion/save")
-    public CommonResponse savePromotionPost(@RequestPart(value="posting") @Valid BoardRequestDto.promotionBoard request,
-                                            @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+    public CommonResponse savePromotionPost(@RequestPart(value = "posting") @Valid BoardRequestDto.promotionBoard request,
+                                            @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) throws IOException {
         boardService.savePromotionPost(request, imgList);
         String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
         String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
@@ -49,8 +49,8 @@ public class PostController {
     }
 
     @PostMapping("question/save")
-    public CommonResponse saveQuestionPost(@RequestPart(value="posting") @Valid BoardRequestDto.questionBoard request,
-                                           @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+    public CommonResponse saveQuestionPost(@RequestPart(value = "posting") @Valid BoardRequestDto.questionBoard request,
+                                           @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) throws IOException {
         boardService.saveQuestionPost(request, imgList);
         String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
         String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
@@ -58,8 +58,8 @@ public class PostController {
     }
 
     @PostMapping("issue/save")
-    public CommonResponse saveIssuePost(@RequestPart(value="posting") @Valid BoardRequestDto.issueBoard request,
-                                        @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+    public CommonResponse saveIssuePost(@RequestPart(value = "posting") @Valid BoardRequestDto.issueBoard request,
+                                        @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) throws IOException {
         boardService.saveIssuePost(request, imgList);
         String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
         String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
@@ -67,8 +67,8 @@ public class PostController {
     }
 
     @PostMapping("study/save")
-    public CommonResponse saveStudyPost(@RequestPart(value="posting") @Valid BoardRequestDto.studyBoard request,
-                                        @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList) throws IOException {
+    public CommonResponse saveStudyPost(@RequestPart(value = "posting") @Valid BoardRequestDto.studyBoard request,
+                                        @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) throws IOException {
         boardService.saveStudyPost(request, imgList);
         String resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
         String resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
@@ -79,7 +79,7 @@ public class PostController {
     /* 게시판PK별 게시글 목록 조회 */
 
     @GetMapping("free/list/{boardNo}")
-    public CommonResponse getFreePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getFreePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -90,7 +90,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -99,7 +99,7 @@ public class PostController {
     }
 
     @GetMapping("promotion/list/{boardNo}")
-    public CommonResponse getPromotionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getPromotionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -110,7 +110,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -119,7 +119,7 @@ public class PostController {
     }
 
     @GetMapping("question/list/{boardNo}")
-    public CommonResponse getQuestionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getQuestionPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -130,7 +130,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -139,7 +139,7 @@ public class PostController {
     }
 
     @GetMapping("issue/list/{boardNo}")
-    public CommonResponse getIssuePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getIssuePostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -150,7 +150,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -160,7 +160,7 @@ public class PostController {
 
 
     @GetMapping("study/list/{boardNo}")
-    public CommonResponse getStudyPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getStudyPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -171,7 +171,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -184,7 +184,7 @@ public class PostController {
 
 
     @GetMapping("free/list/{postNo}/detail")
-    public CommonResponse getFreePostById(@PathVariable Long postNo){
+    public CommonResponse getFreePostById(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -194,7 +194,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -202,7 +202,7 @@ public class PostController {
     }
 
     @GetMapping("promotion/list/{postNo}/detail")
-    public CommonResponse getPromotionPostById(@PathVariable Long postNo){
+    public CommonResponse getPromotionPostById(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -212,7 +212,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -220,7 +220,7 @@ public class PostController {
     }
 
     @GetMapping("question/list/{postNo}/detail")
-    public CommonResponse getQuestionPostById(@PathVariable Long postNo){
+    public CommonResponse getQuestionPostById(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -230,7 +230,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -238,7 +238,7 @@ public class PostController {
     }
 
     @GetMapping("issue/list/{postNo}/detail")
-    public CommonResponse getIssuePostById(@PathVariable Long postNo){
+    public CommonResponse getIssuePostById(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -248,7 +248,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -256,7 +256,7 @@ public class PostController {
     }
 
     @GetMapping("study/list/{postNo}/detail")
-    public CommonResponse getStudyPostById(@PathVariable Long postNo){
+    public CommonResponse getStudyPostById(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -266,7 +266,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -275,7 +275,7 @@ public class PostController {
 
     // 게시글 좋아요
     @PostMapping("list/{postNo}/detail/{userNo}/like")
-    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+    public CommonResponse setLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -285,12 +285,12 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             resultCode = CommonRestResult.CommonRestResultEnum.LIKE_DUPLICATE.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.LIKE_DUPLICATE.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -300,7 +300,7 @@ public class PostController {
 
     // 게시글 좋아요 해제
     @DeleteMapping("list/{postNo}/detail/{userNo}/like")
-    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+    public CommonResponse deleteLikeOnPost(@PathVariable Long userNo, @PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -310,7 +310,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -319,7 +319,7 @@ public class PostController {
 
     // 게시글 스크랩
     @PostMapping("list/{postNo}/detail/{userNo}/scrab")
-    public CommonResponse setScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+    public CommonResponse setScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -329,12 +329,12 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        } catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             resultCode = CommonRestResult.CommonRestResultEnum.SCRAB_DUPLICATE.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SCRAB_DUPLICATE.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -344,7 +344,7 @@ public class PostController {
 
     // 게시글 스크랩 해제
     @DeleteMapping("list/{postNo}/detail/{userNo}/scrab")
-    public CommonResponse deleteScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo){
+    public CommonResponse deleteScrabOnPost(@PathVariable Long userNo, @PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -354,7 +354,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -367,7 +367,7 @@ public class PostController {
     // 질문게시글 답변상태 Y로 업데이트.
     // 질문게시글이 아닌 다른 게시판의 글에 적용시키면 에러 발생.
     @PutMapping("question/list/{postNo}")
-    public CommonResponse updateAnsweredPost(@PathVariable Long postNo){
+    public CommonResponse updateAnsweredPost(@PathVariable Long postNo) {
         String resultMsg;
         String resultCode;
 
@@ -377,7 +377,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -391,8 +391,8 @@ public class PostController {
     //게시글 저장
     @PostMapping("/save")
     //@ResponseStatus(HttpStatus.CREATED)
-    public CommonResponse savePost(@RequestPart(value="posting") @Valid PostSaveRequestDto request,
-                                   @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
+    public CommonResponse savePost(@RequestPart(value = "posting") @Valid PostSaveRequestDto request,
+                                   @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) {
 
         String resultMsg;
         String resultCode;
@@ -404,7 +404,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
@@ -416,7 +416,7 @@ public class PostController {
     // 게시판에서 게시글 목록 조회
     @GetMapping("/list")
     //@ResponseStatus(HttpStatus.OK)
-    public CommonResponse getPostByPaging(@RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getPostByPaging(@RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -427,7 +427,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -437,7 +437,7 @@ public class PostController {
 
     // 게시판PK별 게시글 목록 조회
     @GetMapping("{boardNo}/list")
-    public CommonResponse getPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort){
+    public CommonResponse getPostByPaging(@PathVariable Long boardNo, @RequestParam(value = "page") int pageNum, @RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "DESC") String sort) {
 
         String resultMsg;
         String resultCode;
@@ -448,7 +448,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, page);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -458,7 +458,7 @@ public class PostController {
 
     // 게시글 상세페이지 조회
     @GetMapping("/list/{id}")
-    public CommonResponse getPostById(@PathVariable Long id){
+    public CommonResponse getPostById(@PathVariable Long id) {
         String resultMsg;
         String resultCode;
 
@@ -468,7 +468,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg, post);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -499,8 +499,8 @@ public class PostController {
     @PutMapping("/list/{id}")
     //@ResponseStatus(HttpStatus.OK)
     public CommonResponse updatePost(@PathVariable Long id,
-                                     @RequestPart(value="posting") @Valid PostUpdateRequestDto request,
-                                     @RequestPart(value= "imgList", required = false) List<MultipartFile> imgList){
+                                     @RequestPart(value = "posting") @Valid PostUpdateRequestDto request,
+                                     @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) {
         String resultMsg;
         String resultCode;
 
@@ -510,7 +510,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -518,10 +518,9 @@ public class PostController {
     }
 
 
-
     // 게시글 삭제
     @DeleteMapping("/list/{id}")
-    public CommonResponse deletePost(@PathVariable Long id){
+    public CommonResponse deletePost(@PathVariable Long id) {
         String resultMsg;
         String resultCode;
 
@@ -531,7 +530,7 @@ public class PostController {
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             resultCode = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.PASS_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
@@ -546,10 +545,13 @@ public class PostController {
 //    }
 
 
-    @GetMapping("/followings")
-    public ResponseEntity<List<PostReadResponseDto>> getPostsOfFollowings(HttpServletRequest request) {
-        Long userId = (Long) request.getSession().getAttribute("userId");
+
+
+    @GetMapping("/followings/{userId}")
+    public ResponseEntity<List<PostReadResponseDto>> getPostsOfFollowings(@PathVariable Long userId) {
         List<PostReadResponseDto> posts = postService.findAllPostsOfFollowings(userId);
         return ResponseEntity.ok(posts);
     }
 }
+
+

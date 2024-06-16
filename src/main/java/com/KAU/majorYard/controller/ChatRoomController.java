@@ -12,6 +12,8 @@ import com.KAU.majorYard.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,9 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final ChatMessageService chatMessageService;
     private final UserService userService;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    // TODO: /chat/{userId}/list
+
     @GetMapping("/{userId}/list")
     public ResponseEntity<List<ChatRoomResponseDto>> chatRoomListByUser(@PathVariable Long userId) {
         User user = userService.findById(userId)
@@ -77,13 +80,12 @@ public class ChatRoomController {
         return ResponseEntity.ok(messages);
     }
 
-    @PostMapping("/{chatRoomId}/messages")
-    public ResponseEntity<ChatMessageResponseDto> sendMessage(@PathVariable Long chatRoomId,
-                                                              @RequestBody ChatMessageRequestDto requestDto) {
-        ChatMessageResponseDto message = chatMessageService.sendMessage(chatRoomId, requestDto);
-        return ResponseEntity.ok(message);
+    @MessageMapping("/messages")
+    public ResponseEntity<Void> sendMessage(@RequestBody ChatMessageRequestDto requestDto) {
+        messagingTemplate.convertAndSend("/sub/chatroom/"+requestDto.getRoomId(), requestDto);
+        ChatMessageResponseDto message = chatMessageService.sendMessage(requestDto.getRoomId(), requestDto);
+        return ResponseEntity.ok().build();
     }
-
     @DeleteMapping("/{roomId}")
     public ResponseEntity<String> deleteChatRoom(@PathVariable Long roomId, HttpServletRequest request) {
         Long userId = (Long) request.getSession().getAttribute("userId");
