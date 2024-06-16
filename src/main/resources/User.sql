@@ -18,6 +18,6 @@ insert into User (User.user_no, User.department_no, User.user_name, User.nickNam
 insert into User (User.user_no, User.department_no, User.user_name, User.nickName, User.gender) values (18, 2, '진현정', '징징이', 'FEMALE');
 insert into User (User.user_no, User.department_no, User.user_name, User.nickName, User.gender) values (19, 2, '한장연', '산학최고', 'MALE');
 insert into User (User.user_no, User.department_no, User.user_name, User.nickName, User.gender) values (20, 2, '이이담', '산학짱', 'FEMALE');
-insert into User (User.user_no, User.department_no, User.user_name, User.nickName, User.gender) values (21, 2, 'issue_alarm', '이슈 알리미', 'FEMALE');
+insert into User (user_no, user_name, nickName, gender) values (21, 'issue_alarm', '이슈 알리미', 'FEMALE');
 
 commit;

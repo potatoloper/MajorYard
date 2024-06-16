@@ -19,7 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,8 @@ public class BoardServiceImpl implements BoardService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final S3Service s3Service;
+
+
 
     @Transactional
     public void savePromotionPost(BoardRequestDto.promotionBoard postDto, List<MultipartFile> multipartFiles) throws IOException {
@@ -49,6 +54,9 @@ public class BoardServiceImpl implements BoardService {
                 s3Service.saveImage(multipartFile, post);
             }
         }
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        post.setPostModifiedDt(LocalDateTime.now());
     }
 
     @Transactional
@@ -70,6 +78,10 @@ public class BoardServiceImpl implements BoardService {
                 s3Service.saveImage(multipartFile, post);
             }
         }
+
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        post.setPostModifiedDt(LocalDateTime.now());
     }
 
     @Transactional
@@ -91,6 +103,10 @@ public class BoardServiceImpl implements BoardService {
                 s3Service.saveImage(multipartFile, post);
             }
         }
+
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        post.setPostModifiedDt(LocalDateTime.now());
     }
 
     @Transactional
@@ -112,6 +128,10 @@ public class BoardServiceImpl implements BoardService {
                 s3Service.saveImage(multipartFile, post);
             }
         }
+
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        post.setPostModifiedDt(LocalDateTime.now());
     }
 
     @Transactional
@@ -133,6 +153,10 @@ public class BoardServiceImpl implements BoardService {
                 s3Service.saveImage(multipartFile, post);
             }
         }
+
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        Locale.setDefault(Locale.KOREA);
+        post.setPostModifiedDt(LocalDateTime.now());
     }
 
     private Post createPostByBoardType(BoardRequestDto.promotionBoard postDto, User user, Board board) {
