@@ -74,8 +74,10 @@ public class ChatRoomController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/{chatRoomId}/messages")
-    public ResponseEntity<List<ChatMessageResponseDto>> getMessagesByChatRoom(@PathVariable Long chatRoomId) {
+    @GetMapping("{userId}/{chatRoomId}/messages")
+    public ResponseEntity<List<ChatMessageResponseDto>> getMessagesByChatRoom(@PathVariable Long chatRoomId, @PathVariable Long userId) {
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         List<ChatMessageResponseDto> messages = chatRoomService.getMessagesByChatRoom(chatRoomId);
         return ResponseEntity.ok(messages);
     }

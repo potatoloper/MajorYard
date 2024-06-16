@@ -12,4 +12,6 @@ public class ChatRoomRequestDto {
     private String roomName;
 
     private Long userId; //userId로 구분
+
+    private  Long senderId;
 }

@@ -33,8 +33,8 @@ public class  ChatRoomService {
         return chatRoomRepository.findById(id);
     }
 
-    public List<ChatRoom> findAllByUserIdOrSenderId(Long user_id, Long sender_id) {
-        return chatRoomRepository.findAllByUserIdOrSenderId(user_id, sender_id);
+    public List<ChatRoom> findAllByUserIdOrSenderId(Long userId, Long senderId) {
+        return chatRoomRepository.findAllByUserIdOrSenderId(userId, senderId);
     }
 
     public Optional<ChatRoom> findByIdAndUser(Long id, User user) {
@@ -44,6 +44,7 @@ public class  ChatRoomService {
         ChatRoom chatRoom = ChatRoom.builder()
                 .roomName(requestDto.getRoomName())
                 .user(user)
+                .senderId(requestDto.getSenderId()) // senderId 설정
                 .build();
         return chatRoomRepository.save(chatRoom);
     }
