@@ -41,11 +41,11 @@ public class ChatMessageService {
             throw new EntityNotFoundException("Chat room not found with id: " + roomId);
         }
 
-        User sender = userRepository.findById(requestDto.getUserId())
+        User sender = userRepository.findById(requestDto.getSenderId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid sender ID"));
 
         ChatMessage chatMessage = ChatMessage.builder()
-                .senderId(requestDto.getUserId())
+                .senderId(requestDto.getSenderId())
                 .senderName(sender.getUserName())
                 .text(requestDto.getText())
                 .chatRoom(chatRoom.get())
@@ -70,12 +70,12 @@ public class ChatMessageService {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
 
-        User sender = userRepository.findById(requestDto.getUserId())
+        User sender = userRepository.findById(requestDto.getSenderId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid sender ID"));
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatRoom(chatRoom)
-                .senderId(requestDto.getUserId())
+                .senderId(requestDto.getSenderId())
                 .senderName(sender.getUserName())
                 .text(requestDto.getText())
                 .build();

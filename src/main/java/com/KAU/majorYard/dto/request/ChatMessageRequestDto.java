@@ -13,7 +13,9 @@ import java.sql.Timestamp;
 public class ChatMessageRequestDto {
     private Long roomId;
 
-    private Long userId;
+//    private Long userId;
+
+    private Long senderId;
 
     private Timestamp createdTime;
 
