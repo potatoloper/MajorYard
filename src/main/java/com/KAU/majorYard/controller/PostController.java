@@ -476,46 +476,26 @@ public class PostController {
     }
 
     // 게시글 업데이트 (제목, 내용만)
-//    @PutMapping("/list/{id}")
-//    //@ResponseStatus(HttpStatus.OK)
-//    public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
-//        String resultMsg;
-//        String resultCode;
-//
-//        try {
-//            postService.updatePosts(id, request);
-//            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
-//            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
-//            return new CommonResponse(resultCode, resultMsg);
-//
-//        }catch (Exception e){
-//            resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
-//            resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
-//            return new CommonResponse(resultCode, resultMsg);
-//        }
-//    }
-
-    // 게시글 업데이트
     @PutMapping("/list/{id}")
     //@ResponseStatus(HttpStatus.OK)
-    public CommonResponse updatePost(@PathVariable Long id,
-                                     @RequestPart(value = "posting") @Valid PostUpdateRequestDto request,
-                                     @RequestPart(value = "imgList", required = false) List<MultipartFile> imgList) {
+    public CommonResponse updatePost(@PathVariable Long id, @RequestBody @Valid PostUpdateRequestDto request){
         String resultMsg;
         String resultCode;
 
         try {
-            postService.updatePosts(id, request, imgList);
+            postService.updatePosts(id, request);
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_SUCCESS.getMessage();
             return new CommonResponse(resultCode, resultMsg);
 
-        } catch (Exception e) {
+        }catch (Exception e){
             resultCode = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getCode();
             resultMsg = CommonRestResult.CommonRestResultEnum.SAVE_ERROR.getMessage();
             return new CommonResponse(resultCode, resultMsg);
         }
     }
+
+    // 게시글 업데이트
 
 
     // 게시글 삭제
