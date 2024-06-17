@@ -143,12 +143,12 @@ public class PostServiceImpl{
         return new PostReadResponseDto(post, imgUrls);
     }
 
-//    // 게시글 업데이트 (제목, 내용만)
-//    @Transactional
-//    public void updatePosts(Long id, PostUpdateRequestDto postDto){
-//        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
-//        post.update(postDto.getPostTitle(), postDto.getPostContent());
-//    }
+    // 게시글 업데이트 (제목, 내용만)
+    @Transactional
+    public void updatePosts(Long id, PostUpdateRequestDto postDto){
+        Post post = postRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("게시글이 확인되지 않습니다.") );
+        post.update(postDto.getPostTitle(), postDto.getPostContent());
+    }
 
 
     // 게시글 업데이트
